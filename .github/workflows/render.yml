@@ -16,11 +16,11 @@ jobs:
             xvfb \
             libgl1 \
             libasound2t64 \
-            alsa-utils
+            alsa-utils \
+            ffmpeg  # Required for video encoding
 
       - name: Configure ALSA Null Device
         run: |
-          # 创建虚拟音频设备配置
           echo 'pcm.!default {
             type plug
             slave.pcm "null"
@@ -29,10 +29,7 @@ jobs:
           ctl.!default {
             type hw
             card 0
-          }' | tee ~/.asoundrc
-
-          # 验证ALSA配置
-          aplay -l
+          }' > ~/.asoundrc
 
       - name: Install Phi-Recorder
         run: |
@@ -55,13 +52,12 @@ jobs:
             phi-recorder \
             --render AbsoluTedisoRdeR.AcuteDisarray-AT.pez \
             --output "ATRR.mp4" \
-            --no-audio
         env:
           RUST_BACKTRACE: 1
 
       - name: Upload Video Artifact
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v4
         with:
           name: rendered-video
-          path: ATRR.mp4
+          path: output/ATRR.mp4
           retention-days: 3
