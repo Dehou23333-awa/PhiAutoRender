@@ -4,27 +4,20 @@ on: workflow_dispatch
 
 jobs:
   Render:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
+      - name: Install Dependencies & FFmpeg
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             xvfb \
             libgl1-mesa-glx \
             libasound2 \
-            alsa-utils
-
-      - name: Install Static FFmpeg
-        run: |
-          # 下载预编译版本
-          wget https://github.com/eugeneware/ffmpeg-static/releases/download/b5.0.1/linux-x64
-          chmod +x linux-x64
-          sudo mv linux-x64 /usr/local/bin/ffmpeg
-          sudo ln -s /usr/local/bin/ffmpeg /usr/local/bin/ffprobe
+            alsa-utils \
+            ffmpeg # 使用 apt 安装 FFmpeg
 
       - name: Configure ALSA Null Device
         run: |
@@ -52,20 +45,21 @@ jobs:
       - name: Run Render
         run: |
           export LIBGL_ALWAYS_SOFTWARE=1
-          export SDL_AUDIODRIVER=alsa  # 强制使用ALSA
+          export SDL_AUDIODRIVER=alsa
           export MESA_GL_VERSION_OVERRIDE=3.3
-
-          # 静默运行音频测试
+          
+          # 静默运行音频测试，确保 ALSA 虚拟设备可用
           timeout 5s arecord -d 5 test.wav >/dev/null 2>&1 || true
-
+          
+          # 使用 xvfb-run 运行渲染器
           xvfb-run -s "-screen 0 1920x1080x24" \
             phi-recorder \
             --render AbsoluTedisoRdeR.AcuteDisarray-AT.pez \
             --output "ATRR.mp4" \
-            --no-audio  # 如果支持禁用音频选项
+            --no-audio
         env:
           RUST_BACKTRACE: 1
-        
+
       - name: Upload Video Artifact
         uses: actions/upload-artifact@v4.6.2
         with:
