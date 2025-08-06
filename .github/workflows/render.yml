@@ -47,18 +47,28 @@ jobs:
 
       - name: Run Render
         run: |
-          # 打印输入文件的绝对路径，确保无误
-          PEZ_FILE_PATH="AbsoluTedisoRdeR.AcuteDisarray-AT.pez"
-          if [ ! -f "$PEZ_FILE_PATH" ]; then
-              echo "错误：PEZ 文件 $PEZ_FILE_PATH 不存在！"
+          # 确保 config.toml 和 PEZ 文件路径正确
+          CONFIG_FILE="./config.toml"
+          PEZ_FILE="./AbsoluTedisoRdeR.AcuteDisarray-AT.pez"
+      
+          if [ ! -f "$CONFIG_FILE" ]; then
+              echo "错误：配置文件 $CONFIG_FILE 不存在！"
               exit 1
           fi
-          echo "PEZ 文件路径：$(pwd)/$PEZ_FILE_PATH"
       
-          # 使用 xvfb-run 运行渲染器，并为 --output 参数指定一个具体的路径
+          if [ ! -f "$PEZ_FILE" ]; then
+              echo "错误：PEZ 文件 $PEZ_FILE 不存在！"
+              exit 1
+          fi
+          
+          echo "使用配置文件：$(pwd)/$CONFIG_FILE"
+          echo "渲染 PEZ 文件：$(pwd)/$PEZ_FILE"
+      
+          # 使用 xvfb-run 运行渲染器，并为所有参数指定完整的路径
           xvfb-run -s "-screen 0 1920x1080x24" \
             phi-recorder \
-            --render "$PEZ_FILE_PATH" \
+            --render "$(pwd)/$PEZ_FILE" \
+            --config "$CONFIG_FILE" \
             --output "./output/ATRR.mp4"
         env:
           RUST_BACKTRACE: 1
