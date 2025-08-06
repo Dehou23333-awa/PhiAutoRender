@@ -9,15 +9,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Dependencies & FFmpeg
+      - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             xvfb \
-            libgl1-mesa-glx \
-            libasound2 \
-            alsa-utils \
-            ffmpeg # 使用 apt 安装 FFmpeg
+            libgl1 \
+            libasound2t64 \
+            alsa-utils
 
       - name: Configure ALSA Null Device
         run: |
