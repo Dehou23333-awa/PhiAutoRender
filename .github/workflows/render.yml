@@ -17,7 +17,7 @@ jobs:
             libgl1 \
             libasound2t64 \
             alsa-utils \
-            ffmpeg  # Required for video encoding
+            ffmpeg
 
       - name: Configure ALSA Null Device
         run: |
@@ -37,6 +37,9 @@ jobs:
           LATEST_VERSION="${LATEST_RELEASE:1}"
           wget "https://github.com/2278535805/Phi-Recorder/releases/download/v${LATEST_VERSION}/phi-recorder_${LATEST_VERSION}_amd64.deb" -O phi-recorder.deb
           sudo dpkg -i phi-recorder.deb || sudo apt-get install -f -y
+
+      - name: Print detailed directory info 📂
+        run: ls -laR .
 
       - name: Run Render
         run: |
