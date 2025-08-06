@@ -41,6 +41,10 @@ jobs:
       - name: Print detailed directory info 📂
         run: ls -laR .
 
+      - name: Copy assets to target directory
+        run: |
+          sudo cp -r assets /usr/bin/
+
       - name: Run Render
         run: |
           export LIBGL_ALWAYS_SOFTWARE=1
