@@ -47,18 +47,19 @@ jobs:
 
       - name: Run Render
         run: |
-          export LIBGL_ALWAYS_SOFTWARE=1
-          export SDL_AUDIODRIVER=alsa
-          export MESA_GL_VERSION_OVERRIDE=3.3
-          
-          # 静默运行音频测试，确保 ALSA 虚拟设备可用
-          timeout 5s arecord -d 5 test.wav >/dev/null 2>&1 || true
-          
-          # 使用 xvfb-run 运行渲染器
+          # 打印输入文件的绝对路径，确保无误
+          PEZ_FILE_PATH="AbsoluTedisoRdeR.AcuteDisarray-AT.pez"
+          if [ ! -f "$PEZ_FILE_PATH" ]; then
+              echo "错误：PEZ 文件 $PEZ_FILE_PATH 不存在！"
+              exit 1
+          fi
+          echo "PEZ 文件路径：$(pwd)/$PEZ_FILE_PATH"
+      
+          # 使用 xvfb-run 运行渲染器，并为 --output 参数指定一个具体的路径
           xvfb-run -s "-screen 0 1920x1080x24" \
             phi-recorder \
-            --render AbsoluTedisoRdeR.AcuteDisarray-AT.pez \
-            --output "ATRR.mp4" \
+            --render "$PEZ_FILE_PATH" \
+            --output "./output/ATRR.mp4"
         env:
           RUST_BACKTRACE: 1
 
