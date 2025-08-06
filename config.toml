@@ -1,33 +1,41 @@
 # Output 输出
 resolution = [1280, 960]
 fps = 60
-ffmpegPreset = "medium p4 medium balanced" # "cpu nvenc qsv amf"
-hardwareAccel = true
 sampleCount = 2
+hardwareAccel = true
 hevc = false
 mpeg4 = false
 customEncoder = "libx264"
-bitrateControl = "CRF"
+ffmpegPreset = "medium p4 medium balanced" # "cpu nvenc qsv amf" or "any"
+dynamicBitrateControl = true
 bitrate = "26"
+endingLength = 10.0
+renderStartTime = 0.0
+# renderEndTime = 
 
 
 # Player 玩家
 # playerAvatar = ""
 playerName = "Dehou23333"
 playerRks = 16.0
-challengeColor = "rainbow"
+challengeColor = "rainbow" # white green blue red golden rainbow
 challengeRank = 3
 
 
 # Graphics 图像
 # res_pack_path = ""
-noteScale = 1.0
-# 谱面揭秘时配置
-# chartDebug = 0.4
-# chartRatio = 0.40
+
 # 谱面演示时配置
-chartDebug = 0.0
-chartRatio = 1.00
+chartDebugLine = 0.0
+chartDebugNote = 0.0
+chartRatio = 1.0
+
+# 谱面揭秘时配置
+# chartDebugLine = 0.4
+# chartDebugNote = 0.3
+# chartRatio = 0.40
+
+noteScale = 1.0
 
 disableLoading = false
 renderLine = true
@@ -41,8 +49,8 @@ renderUiCombo = true
 renderUiBar = true
 renderBg = true
 renderBgDim = true
+renderExtra = true
 particle = true
-disableEffect = false
 doubleHint = true
 
 aggressive = false
@@ -50,11 +58,15 @@ roman = false
 chinese = false
 
 bgBlurriness = 80.0
-
+watermark = "Auto Rendered with Phi-Recorder. Only released by 德猴先生 on Bilibili."
+combo = "AUTOPLAY"
+maxParticles = 1000 # 20000 100000 800000
 
 # Audio 音频
 forceLimit = true
 hires = false
+loudnessEqualization = false
+
 volumeMusic = 1.0
 volumeSfx = 0.7
 compressionRatio = 20.0
@@ -62,16 +74,12 @@ limitThreshold = 1.0
 
 
 # Other 其他
-endingLength = 10.0
-watermark = "Auto Rendered with Phi-Recorder. Only released by 德猴先生 on Bilibili."
-combo = "AUTOPLAY"
-difficulty = ""
 allGood = false
 allBad = false
 judgeOffset = 0.0
-maxParticles = 1000
+difficulty = ""
 fade = 0.0
 
-simpleFileName = false
+simpleFileName = false # {date} {name}_{level} -> {name}.{composer}_{level}
 fxaa = false
 speed = 1.0
