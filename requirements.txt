@@ -4,3 +4,6 @@ toml
 wget
 requests
 Pillow
+bilibili-api-python
+aiohttp
+dotenv

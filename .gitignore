@@ -13,3 +13,4 @@ info
 music
 *.mp4
 temp
+.env
