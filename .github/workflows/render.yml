@@ -1,0 +1,81 @@
+name: Render Video
+
+on: workflow_dispatch
+
+jobs:
+  Render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            xvfb \
+            libgl1 \
+            libasound2t64 \
+            alsa-utils \
+            ffmpeg
+
+      - name: Configure ALSA Null Device
+        run: |
+          echo 'pcm.!default {
+            type plug
+            slave.pcm "null"
+          }
+
+          ctl.!default {
+            type hw
+            card 0
+          }' > ~/.asoundrc
+
+      - name: Install Phi-Recorder
+        run: |
+          LATEST_RELEASE=$(curl -s "https://api.github.com/repos/2278535805/Phi-Recorder/releases/latest" | jq -r '.tag_name')
+          LATEST_VERSION="${LATEST_RELEASE:1}"
+          wget "https://github.com/2278535805/Phi-Recorder/releases/download/v${LATEST_VERSION}/phi-recorder_${LATEST_VERSION}_amd64.deb" -O phi-recorder.deb
+          sudo dpkg -i phi-recorder.deb || sudo apt-get install -f -y
+
+      - name: Print detailed directory info 📂
+        run: ls -laR .
+
+      - name: Copy assets to target directory
+        run: |
+          sudo cp -r assets /usr/bin/
+
+      - name: Run Render
+        run: |
+          # 确保 config.toml 和 PEZ 文件路径正确
+          CONFIG_FILE="./config.toml"
+          PEZ_FILE="./AbsoluTedisoRdeR.AcuteDisarray-AT.pez"
+      
+          if [ ! -f "$CONFIG_FILE" ]; then
+              echo "错误：配置文件 $CONFIG_FILE 不存在！"
+              exit 1
+          fi
+      
+          if [ ! -f "$PEZ_FILE" ]; then
+              echo "错误：PEZ 文件 $PEZ_FILE 不存在！"
+              exit 1
+          fi
+          
+          echo "使用配置文件：$(pwd)/$CONFIG_FILE"
+          echo "渲染 PEZ 文件：$(pwd)/$PEZ_FILE"
+      
+          # 使用 xvfb-run 运行渲染器，并为所有参数指定完整的路径
+          xvfb-run -s "-screen 0 1920x1080x24" \
+            phi-recorder \
+            --render "$(pwd)/$PEZ_FILE" \
+            --config "$CONFIG_FILE" \
+            --output "./output/ATRR.mp4"
+        env:
+          RUST_BACKTRACE: 1
+
+      - name: Upload Video Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-video
+          path: output/ATRR.mp4
+          retention-days: 3

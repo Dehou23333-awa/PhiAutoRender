@@ -1,0 +1,7 @@
+# Phigros
+
+*.tmp
+*.apk
+__pycache__
+test*
+.venv
