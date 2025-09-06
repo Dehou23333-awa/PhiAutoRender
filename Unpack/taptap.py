@@ -28,6 +28,7 @@ def taptap(appid):
         headers={"User-Agent": "okhttp/3.12.1"}
     )
     r = json.load(conn.getresponse())
+    version_name = r["data"]["download"]["apk"]["version_name"]
     version = r["data"]["download"]['apk']["version_code"]
     apkid = r["data"]["download"]["apk_id"]
     md5_apk = r["data"]["download"]['apk']["md5"]
@@ -49,14 +50,14 @@ def taptap(appid):
     url = r['data']['apk']['download']
     logger.info("Successfully fetched download URL and MD5")
     # 只返回信息，不下载
-    return url, md5_apk, version
+    return url, md5_apk, version, version_name
 
 # Phigros app id = 165287
 def main():
     logger.info("Starting main function")
-    url, md5_apk, version = taptap(165287)
+    url, md5_apk, version, Phiversion = taptap(165287)
     # 只返回信息，不下载
-    return url, md5_apk, version
+    return url, md5_apk, version, Phiversion
 
 if __name__ == "__main__":
-    main()
+    print(main())

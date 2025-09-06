@@ -15,6 +15,7 @@ DEBUG = False
 logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+
 def main():
     def build_md5_table():
         md5_dict = {}
@@ -40,13 +41,13 @@ def main():
             diff_data = json.load(diff_file)
 
         with open('../Chart_info_New.json', 'w', encoding='utf-8') as md5_file:
-            json.dump({"Version":version,"MD5":md5_dict,"INFO":info_data,"DIFFICULTY":diff_data}, md5_file, indent=4, ensure_ascii=False)
+            json.dump({"Version":version,"PhiVersion":Phiversion,"MD5":md5_dict,"INFO":info_data,"DIFFICULTY":diff_data}, md5_file, indent=4, ensure_ascii=False)
 
         logger.info("MD5 table successfully created")
         return md5_dict
 
     # Step 1 Download Phigros Apk
-    url, md5_apk, version = taptap.main()
+    url, md5_apk, version, Phiversion = taptap.main()
 
     # 检查是否有更新
     with open('../Chart_info.json', 'r', encoding='utf-8') as f:

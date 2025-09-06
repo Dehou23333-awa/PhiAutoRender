@@ -58,9 +58,10 @@ def main(fast=True):
                 continue
             file_path = os.path.join(root, file)
             logger.info("Rendering file: %s", file_path)
-            renderHelper(file_path)
+            video_type = file_path.split("\\")[1]
+            # renderHelper(file_path)
             renameHelper(file_path)
-            # subprocess.run(["python", "../Upload/main.py", file_path], shell=True)
+            # subprocess.run(["python", "../Upload/main.py", file_path, video_type], shell=True)
     shutil.rmtree("./temp")
 
 
