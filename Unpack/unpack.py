@@ -16,7 +16,8 @@ from fsb5 import vorbis
 import logging
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 class ByteReader:
@@ -37,14 +38,14 @@ queue_in = Queue()
 
 
 def io():
-    logging.info("Starting I/O thread")
+    logger.info("Starting I/O thread")
     """
     在单独的线程中处理文件写入操作，避免I/O阻塞。
     """
     while True:
         item = queue_in.get()
         if item is None:
-            logging.info("I/O thread received termination signal")
+            logger.info("I/O thread received termination signal")
             break
         else:
             path, resource = item
@@ -114,7 +115,7 @@ def save(key, entry, pool):
 
 
 def run(path):
-    logging.info("Starting unpack process for: %s", path)
+    logger.info("Starting unpack process for: %s", path)
     """
     主解包流程函数。
     负责读取APK，解析catalog.json，并分派任务进行解包。
@@ -123,9 +124,9 @@ def run(path):
     os.makedirs("music", exist_ok=True)
     os.makedirs("chart", exist_ok=True)
     os.makedirs("illustration", exist_ok=True)
-    logging.info("Output directories created")
+    logger.info("Output directories created")
 
-    logging.info("Parsing catalog.json")
+    logger.info("Parsing catalog.json")
     with ZipFile(path) as apk:
         with apk.open("assets/aa/catalog.json") as f:
             data = json.load(f)
@@ -180,7 +181,7 @@ def run(path):
 
     # 使用线程池处理CPU密集型任务（图像和音频转换）
     with ThreadPoolExecutor(max_workers=6) as pool:
-        logging.info("Starting asset processing")
+        logger.info("Starting asset processing")
         # 原始代码中的完整解包逻辑，移除了与UPDATE配置相关的if/else分支
         with ZipFile(path) as apk:
             for key, bundle_hash in table:
@@ -197,5 +198,5 @@ def run(path):
     queue_in.put(None)
     # 等待I/O线程完成所有文件写入
     io_thread.join()
-    logging.info("All assets processed successfully")
-    logging.info("Unpack process completed")
+    logger.info("All assets processed successfully")
+    logger.info("Unpack process completed")

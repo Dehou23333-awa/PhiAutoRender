@@ -2,11 +2,16 @@ from zipfile import ZipFile
 import os
 import json
 import toml
+import logging
 
 LEVELS = ["EZ", "HD", "IN", "AT"]
 
 PhiRecorderConfigToml = {
 }
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 def prepare_config(isDebug, Ratio):
     """
@@ -25,10 +30,10 @@ def prepare_config(isDebug, Ratio):
         with open(config_path, 'r', encoding='utf-8') as f:
             config = toml.load(f)
     except FileNotFoundError:
-        print(f"Error: config.toml not found at {config_path}")
+        logger.error(f"Error: config.toml not found at {config_path}")
         return None
     except Exception as e:
-        print(f"Error reading config.toml: {e}")
+        logger.error(f"Error reading config.toml: {e}")
         return None
     
     # 根据参数修改配置
@@ -57,7 +62,7 @@ def prepare_config(isDebug, Ratio):
         config_string.close()
         return config_content
     except Exception as e:
-        print(f"Error generating config content: {e}")
+        logger.error(f"Error generating config content: {e}")
         return None
 
 
@@ -65,7 +70,7 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
 
     """Create a .pez file based on track ID and difficulty level."""
     if level_name not in LEVELS:
-        print(f"Error: Invalid level {level_name}. Must be one of {LEVELS}.")
+        logger.error(f"Error: Invalid level {level_name}. Must be one of {LEVELS}.")
         return
 
     # Read info.json
@@ -74,10 +79,10 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
         with open("info/info.json", encoding="utf8") as f:
             infos = json.load(f)
     except FileNotFoundError:
-        print("Error: info.json not found in info directory.")
+        logger.error("Error: info.json not found in info directory.")
         return
     except Exception as e:
-        print(f"Error reading info.json: {e}")
+        logger.error(f"Error reading info.json: {e}")
         return
 
     # Read difficulty.json
@@ -86,21 +91,21 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
         with open("info/difficulty.json", encoding="utf8") as f:
             difficulties = json.load(f)
     except FileNotFoundError:
-        print("Error: difficulty.json not found in info directory.")
+        logger.error("Error: difficulty.json not found in info directory.")
         return
     except Exception as e:
-        print(f"Error reading difficulty.json: {e}")
+        logger.error(f"Error reading difficulty.json: {e}")
         return
 
     if track_id not in infos:
-        print(f"Error: Track ID {track_id} not found in info.json.")
+        logger.error(f"Error: Track ID {track_id} not found in info.json.")
         return
 
     info = infos[track_id]
     
     # Check if the track has the requested difficulty level
     if track_id not in difficulties or level_name not in difficulties[track_id] or difficulties[track_id][level_name] is None:
-        print(f"Error: Track {track_id} has no {level_name} difficulty.")
+        logger.error(f"Error: Track {track_id} has no {level_name} difficulty.")
         return
 
     # Create .pez file
@@ -117,7 +122,7 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
     debug_suffix = "debug" if isDebug else "normal"
     
     pez_path = f"{path}/{track_id}-{level_name}-{ratio_safe}-{debug_suffix}.pez"
-    print(f"Processing: {info['Name']}, Composer: {info['Composer']}, Level: {level_name}")
+    logger.info(f"Processing: {info['Name']}, Composer: {info['Composer']}, Level: {level_name}")
     
     try:
         with ZipFile(pez_path, "x") as pez:
@@ -151,6 +156,6 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
                 try:
                     pez.write(src, dst)
                 except FileNotFoundError:
-                    print(f"Warning: File not found: {src}")
+                    logger.warning(f"File not found: {src}")
     except Exception as e:
-        print(f"Error creating .pez file {pez_path}: {e}")
+        logger.error(f"Error creating .pez file {pez_path}: {e}")

@@ -5,3 +5,11 @@
 __pycache__
 test*
 .venv
+output
+input
+chart
+illustration
+info
+music
+*.mp4
+temp

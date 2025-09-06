@@ -12,12 +12,13 @@ import logging
 sample = string.ascii_lowercase + string.digits
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 def taptap(appid):
-    logging.info("Starting taptap function with appid: %d", appid)
+    logger.info("Starting taptap function with appid: %d", appid)
     uid = uuid.uuid4()
-    logging.debug("Generated UID: %s", uid)
+    logger.debug("Generated UID: %s", uid)
     X_UA = "V=1&PN=TapTap&VN=2.40.1-rel.100000&VN_CODE=240011000&LOC=CN&LANG=zh_CN&CH=default&UID=%s&NT=1&SR=1080x2030&DEB=Xiaomi&DEM=Redmi+Note+5&OSV=9" % uid
 
     conn = HTTPSConnection("api.taptapdada.com")
@@ -33,7 +34,7 @@ def taptap(appid):
 
     nonce = "".join(random.sample(sample, 5))
     t = int(time.time())
-    param = "abi=arm64-v8a,armeabi-v7a,armeabi&id=%d&node=%s&nonce=%s&sandbox=1&screen_densities=xhdpi&time=%s" % (apkid, uid, nonce, t)
+    param = "abi=arm64-v8a,armeabi&id=%d&node=%s&nonce=%s&sandbox=1&screen_densities=xhdpi&time=%s" % (apkid, uid, nonce, t)
     byte = "X-UA=%s&%sPeCkE6Fu0B10Vm9BKfPfANwCUAn5POcs" % (X_UA, param)
     md5 = hashlib.md5(byte.encode()).hexdigest()
     body = "%s&sign=%s" % (param, md5)
@@ -46,13 +47,13 @@ def taptap(appid):
     )
     r = json.load(conn.getresponse())
     url = r['data']['apk']['download']
-    logging.info("Successfully fetched download URL and MD5")
+    logger.info("Successfully fetched download URL and MD5")
     # 只返回信息，不下载
     return url, md5_apk, version
 
 # Phigros app id = 165287
 def main():
-    logging.info("Starting main function")
+    logger.info("Starting main function")
     url, md5_apk, version = taptap(165287)
     # 只返回信息，不下载
     return url, md5_apk, version

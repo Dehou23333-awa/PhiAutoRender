@@ -5,23 +5,24 @@ import zipfile
 import logging
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 def run(path):
-    logging.info("Starting run function with path: %s", path)
+    logger.info("Starting run function with path: %s", path)
     if not os.path.isdir("info"):
-        logging.info("Creating 'info' directory")
+        logger.info("Creating 'info' directory")
         os.mkdir("info")
     with open("typetree.json") as f:
         typetree = json.load(f)
     env = Environment()
-    logging.info("Loading APK file: %s", path)
+    logger.info("Loading APK file: %s", path)
     with zipfile.ZipFile(path) as apk:
         with apk.open("assets/bin/Data/globalgamemanagers.assets") as f:
             env.load_file(f.read(), name="assets/bin/Data/globalgamemanagers.assets")
         with apk.open("assets/bin/Data/level0") as f:
             env.load_file(f.read())
-    logging.info("Processing game information")
+    logger.info("Processing game information")
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -46,7 +47,7 @@ def run(path):
             difficulty.append([song["songsId"]]+song["difficulty"])
             table.append((song["songsId"], song["songsName"], song["composer"], song["illustrator"], *song["charter"]))
 
-    logging.info("Successfully processed game information")
+    logger.info("Successfully processed game information")
 
     # 导出 difficulty.json 格式（在 difficulty 已经生成后）
     difficulty_labels = ["EZ", "HD", "IN", "AT"]
@@ -77,4 +78,4 @@ def run(path):
     with open("info/info.json", "w", encoding="utf8") as f:
         json.dump(info_nested, f, ensure_ascii=False, indent=4)
 
-    logging.info("Run gameInformation completed")
+    logger.info("Run gameInformation completed")
