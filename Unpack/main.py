@@ -133,3 +133,5 @@ for song in New_AT_Songs:
 for song in Deleted_Songs:
     for level in range(3 + int(Deleted_Songs[song])):
         PezHelper(song[:-2], LEVELS[level], "DeletedSongs")
+
+print("All tasks completed.")
