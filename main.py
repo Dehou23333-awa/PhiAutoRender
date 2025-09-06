@@ -1,6 +1,5 @@
 import subprocess
 import logging
-import shutil
 import time
 
 # Configure logging
@@ -15,7 +14,6 @@ unpack.wait()
 logger.info("Unpack completed, copying output to Render/input")
 
 
-shutil.copytree("Unpack/output", "Render/input", dirs_exist_ok=True)
 render = subprocess.Popen("cd Render && python render.py", shell=True)
 render.wait()
 logger.info("Render process completed")
