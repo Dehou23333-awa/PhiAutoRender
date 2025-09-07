@@ -4,6 +4,9 @@ import dotenv
 import os
 import json
 import logging
+import Cover
+import sys
+from mutagen.oggvorbis import OggVorbis
 
 dotenv.load_dotenv()
 
@@ -13,6 +16,13 @@ logger = logging.getLogger(__name__)
 SESSDATA = os.getenv("SESSDATA")
 BILI_JCT = os.getenv("BILI_JCT")
 BUVID3 = os.getenv("BUVID3")
+
+version = ""
+t = ""
+level = ""
+songname = ""
+Video_path = ""
+video_type = ""
 
 async def upload(Title, Description, Cover_path, Video_path):
     credential = Credential(sessdata=SESSDATA, bili_jct=BILI_JCT, buvid3=BUVID3)
@@ -36,7 +46,7 @@ async def upload(Title, Description, Cover_path, Video_path):
 
     @uploader.on("__ALL__")
     async def ev(data):
-        print(data)
+        logger.debug(f"Event: {data}")
 
     await uploader.start()
 
@@ -46,9 +56,53 @@ def infoHelper(name):
     for key, value in infos.items():
         if (key) == name:
             return f"{value['Name']}"
+        
+def anylizeHelper(name):
+    with open(f"../Unpack/chart/{name}.0/{level}.json", encoding="utf8") as f:
+        chart = json.load(f)["judgeLineList"]
+    des = "谱面信息："
+    # BPM最小~最大
+    bpm_list = []
+    tap = 0
+    hold = 0
+    flick = 0
+    drag = 0
+    for line in chart:
+        bpm_list.append(line["bpm"])
+        for note in line["notesAbove"]:
+            if note["type"] == 1:
+                tap += 1
+            elif note["type"] == 2:
+                drag += 1
+            elif note["type"] == 3:
+                hold += 1
+            elif note["type"] == 4:
+                flick += 1
+        for note in line["notesBelow"]:
+            if note["type"] == 1:
+                tap += 1
+            elif note["type"] == 2:
+                drag += 1
+            elif note["type"] == 3:
+                hold += 1
+            elif note["type"] == 4:
+                flick += 1
+    if min(bpm_list) == max(bpm_list):
+        des += f"\nBPM：{round(min(bpm_list))}"
+    else:
+        des += f"\nBPM：{round(min(bpm_list))}~{round(max(bpm_list))}"
+    des += f"\n物量：{tap + hold + flick + drag}"
+    des += f"\nTap: {tap}  Drag: {drag}  Hold: {hold}  Flick: {flick}"
+    des += f"\n判定线总数：{len(chart)}"
 
-def description(name, version, t):
-    level = name[-2:]
+    return des
+
+def getsongtime(name):
+    audio = OggVorbis(f"../Unpack/music/{name}.ogg")
+    return round(audio.info.length, 2)
+
+def description(name):
+    global level, t, version
     with open("../Chart_info_New.json", encoding="utf8") as f:
         infos = json.load(f)
     des = ""
@@ -60,10 +114,18 @@ def description(name, version, t):
         if (key) == name[:-3]:
             if level in value:
                 des += f"\n难度：{level} Lv.{value[level]}"
-    des += "\n\n本视频由 PhiAutoRender 自动生成。如有侵权请联系删除。"
+    des += f"\n曲目时长：{getsongtime(name[:-3])}s\n\n"
+    des += anylizeHelper(name[:-3])
+    des += "\n\n定数、物量、Note数、判定线数、曲目时长、BPM等由程序获取\n本视频由 PhiAutoRender 自动生成。如有侵权请联系删除。"
     return des
 
-def run(Video_path, video_type):
+def illustrationHelper(name):
+    return f"../Unpack/illustration/{name}.png"
+
+def run():
+    global Video_path, video_type
+    global version, t, level, songname
+    songname = infoHelper(Video_path[17:-7])
     with open("../Chart_info_New.json", encoding="utf8") as f:
         infos = json.load(f)
     version = infos['PhiVersion']
@@ -73,19 +135,31 @@ def run(Video_path, video_type):
         t = "新歌"
     elif video_type == "NewAT":
         t = "新AT"
+    level = Video_path[17:-4][-2:]
 
-    Title = f"【Phigros 谱面演示/v{version}/{t}】" + infoHelper(Video_path[17:-7])
-    Description = description(Video_path[17:-4], version, t)
-    Cover_path = "咕咕咕没写完"
+    Title = f"【Phigros 谱面演示/v{version}/{t}】" + songname + " " + level
+    Description = description(Video_path[17:-4])
+
+    # 不重复生成图片
+    Cover_path = illustrationHelper(Video_path[17:-7])
+    try:
+        Cover.run_pillow(Cover_path, f"../Upload/Covers/cover_{Video_path[17:-7]}.png", songname)
+    except FileExistsError:
+        pass
 
     logger.info("Title: %s", Title)
     logger.info("Description: %s", Description)
     logger.info("Cover: %s", Cover_path)
     logger.info("Video: %s", Video_path)
 
-    # sync(upload(Title, Description, Cover_path, Video_path))
+    sync(upload(Title, Description, f"../Upload/Covers/cover_{Video_path[17:-7]}.png", Video_path))
 
 if __name__ == "__main__":
-    video_type = "NewSongs"
-    Video_path = "../Render/output/雪降り雪が降っている.AiSSw夜輪ft結月ゆかり-AT.mp4"
-    run(Video_path, video_type)
+    # Video_path = "../Render/output/雪降り雪が降っている.AiSSw夜輪ft結月ゆかり-IN.mp4"
+    # video_type = "NewSongs"
+    if len(sys.argv) > 2:
+        Video_path = "../Render/output/" + sys.argv[1]
+        video_type = sys.argv[2]
+    if not os.path.exists("../Upload/Covers"):
+        os.makedirs("../Upload/Covers")
+    run()

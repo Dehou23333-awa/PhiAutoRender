@@ -50,6 +50,7 @@ def renameHelper(filename):
             if file not in namelist:
                 os.rename(os.path.join(root, file), os.path.join(root, realname))
                 namelist.append(realname)
+                return realname
 
 def main(fast=True):
     for root, dirs, files in os.walk("../Unpack/output"):
@@ -59,13 +60,13 @@ def main(fast=True):
             file_path = os.path.join(root, file)
             logger.info("Rendering file: %s", file_path)
             video_type = file_path.split("\\")[1]
-            # renderHelper(file_path)
-            renameHelper(file_path)
-            # subprocess.run(["python", "../Upload/main.py", file_path, video_type], shell=True)
+            renderHelper(file_path)
+            name = renameHelper(file_path)
+            cmd = ["python", "../Upload/main.py", name, video_type]
+            logger.debug("Running upload command: %s", ' '.join(cmd))
+            subprocess.run(cmd, shell=True, check=True)
     shutil.rmtree("./temp")
 
 
 if __name__ == "__main__":
     main(fast=True)
-    # print(queryname("Rebirth.ああああ-IN-16_9-normal.pez"))
-    # renderHelper(r"D:\Phigros-DEV\simulation_and_rendering\PhiAutoRender-main\Unpack\output\Phigros_4.5.0_20230901_16_9-normal.pez")

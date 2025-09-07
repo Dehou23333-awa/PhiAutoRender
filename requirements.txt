@@ -7,3 +7,4 @@ Pillow
 bilibili-api-python
 aiohttp
 dotenv
+mutagen
