@@ -49,9 +49,9 @@ def prepare_config(isDebug, Ratio):
         config['chartRatio'] = 1.0
 
     if Ratio == "4:3":
-        config['resolution'] = [1280, 960]
+        config['resolution'] = [1920, 1440]
     elif Ratio == "16:9":
-        config['resolution'] = [1280, 720]
+        config['resolution'] = [1920, 1080]
 
     # 直接返回配置文件内容字符串
     try:

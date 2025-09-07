@@ -116,7 +116,7 @@ def description(name):
                 des += f"\n难度：{level} Lv.{value[level]}"
     des += f"\n曲目时长：{getsongtime(name[:-3])}s\n\n"
     des += anylizeHelper(name[:-3])
-    des += "\n\n定数、物量、Note数、判定线数、曲目时长、BPM等由程序获取\n本视频由 PhiAutoRender 自动生成。如有侵权请联系删除。"
+    des += "\n\n定数、物量、Note数、判定线数、曲目时长、BPM等由程序获取\n本视频由 PhiAutoRender 自动生成。如有侵权请联系删除。\n渲染：Phi-Recorder By HLMC离开"
     return des
 
 def illustrationHelper(name):

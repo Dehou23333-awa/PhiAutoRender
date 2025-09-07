@@ -1,5 +1,5 @@
 # Output 输出
-resolution = [1280, 960]
+resolution = [1920, 1080] # [width, height]
 fps = 60
 sampleCount = 2
 hardwareAccel = true
@@ -37,7 +37,7 @@ chartRatio = 1.0
 
 noteScale = 1.0
 
-disableLoading = false
+disableLoading = true
 renderLine = true
 renderLineExtra = true
 renderNote = true
