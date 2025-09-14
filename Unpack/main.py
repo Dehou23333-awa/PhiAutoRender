@@ -6,66 +6,103 @@ import json
 import os
 import hashlib
 import logging
-import wget
+import time
 import shutil
+import aria2p
 
 DEBUG = False
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+aria2 = aria2p.API(
+    aria2p.Client(
+        host="http://localhost",
+        port=16800,
+        secret="6365tHRnPmb2"
+    )
+)
+
+def download(url):
+    logger.info(f"Downloading from URL: {url}")
+    download = aria2.add_uris([url],
+    options={"dir": os.path.abspath("../temp"), "out": f"Phigros_{version}.apk"}  # 指定下载目录
+    )
+    while not download.is_complete:
+        download.update()
+        logger.info(f"Download progress: {download.progress_string()}")
+        time.sleep(1)
+    logger.info("Download completed.")
+
+url, md5_apk, version, Phiversion = "","", "", ""
+
+def build_md5_table():
+    md5_dict = {}
+    logger.info("Building file information table with MD5 hashes")
+    for root, dirs, files in os.walk('../temp/chart'):
+        folder_name = os.path.basename(root)
+        if folder_name == 'chart':
+            continue
+        if folder_name not in md5_dict:
+            md5_dict[folder_name] = {}
+        for file in files:
+            level = os.path.splitext(file)[0].split('-')[-1].upper()
+            if level in ['EZ', 'HD', 'IN', 'AT']:
+                file_path = os.path.join(root, file)
+                with open(file_path, 'rb') as f:
+                    md5 = hashlib.md5(f.read()).hexdigest()
+                    md5_dict[folder_name][level] = md5
+
+    with open("../temp/info/info.json", "r", encoding='utf-8') as info_file:
+        info_data = json.load(info_file)
+
+    with open("../temp/info/difficulty.json", "r", encoding='utf-8') as diff_file:
+        diff_data = json.load(diff_file)
+
+    with open('../data/Chart_info_New.json', 'w', encoding='utf-8') as md5_file:
+        json.dump({"Version":version,"PhiVersion":Phiversion,"MD5":md5_dict,"INFO":info_data,"DIFFICULTY":diff_data}, md5_file, indent=4, ensure_ascii=False)
+
+    logger.info("MD5 table successfully created")
+    return md5_dict
 
 
 def main():
-    def build_md5_table():
-        md5_dict = {}
-        logger.info("Building file information table with MD5 hashes")
-        for root, dirs, files in os.walk('chart'):
-            folder_name = os.path.basename(root)
-            if folder_name == 'chart':
-                continue
-            if folder_name not in md5_dict:
-                md5_dict[folder_name] = {}
-            for file in files:
-                level = os.path.splitext(file)[0].split('-')[-1].upper()
-                if level in ['EZ', 'HD', 'IN', 'AT']:
-                    file_path = os.path.join(root, file)
-                    with open(file_path, 'rb') as f:
-                        md5 = hashlib.md5(f.read()).hexdigest()
-                        md5_dict[folder_name][level] = md5
+    global url, md5_apk, version, Phiversion
 
-        with open("info/info.json", "r", encoding='utf-8') as info_file:
-            info_data = json.load(info_file)
-
-        with open("info/difficulty.json", "r", encoding='utf-8') as diff_file:
-            diff_data = json.load(diff_file)
-
-        with open('../Chart_info_New.json', 'w', encoding='utf-8') as md5_file:
-            json.dump({"Version":version,"PhiVersion":Phiversion,"MD5":md5_dict,"INFO":info_data,"DIFFICULTY":diff_data}, md5_file, indent=4, ensure_ascii=False)
-
-        logger.info("MD5 table successfully created")
-        return md5_dict
-
-    # Step 1 Download Phigros Apk
-    url, md5_apk, version, Phiversion = taptap.main()
-
-    # 检查是否有更新
-    with open('../Chart_info.json', 'r', encoding='utf-8') as f:
-        old_chart_info = json.load(f)
-        logger.info("Checking for updates")
-        if old_chart_info["Version"] == version:
-            logger.info("No updates found. Exiting.")
-            exit(0)
-    logger.info("Updates found.")
+    # Step 1: 持续检查更新，直到找到新版本
+    logger.info("Starting continuous update monitoring...")
+    
+    while True:
+        try:
+            # 获取最新版本信息
+            url, md5_apk, version, Phiversion = taptap.main()
+            
+            # 检查是否有更新
+            with open('../data/Chart_info.json', 'r', encoding='utf-8') as f:
+                old_chart_info = json.load(f)
+                logger.info("Checking for updates")
+                if old_chart_info["Version"] == version:
+                    logger.info("No updates found. Waiting for next check...")
+                    time.sleep(5)  # 等待5秒后再次检查
+                    continue
+                else:
+                    logger.info("Updates found! Proceeding with download and processing...")
+                    break  # 找到更新，跳出循环
+        except Exception as e:
+            logger.error(f"Error during update check: {e}")
+            logger.info("Retrying in 5 seconds...")
+            time.sleep(5)
+            continue
 
     # 只有有新版本时才下载 APK
     logger.info(f"Downloading new APK version: {version}")
-    if not os.path.exists(f"Phigros_{version}.apk"):
+    if not os.path.exists(f"../temp/Phigros_{version}.apk"):
         logger.info("Downloading Phigros_{}.apk".format(version))
-        wget.download(url, f"Phigros_{version}.apk")
-        # wget.download(url, f"Phigros_{version}.apk", bar=None)
+        logger.info(f"Downloading from URL: {url}")
+        download(url)
         logger.info("Checking MD5...")
-        apk_md5 = hashlib.md5(open(f"Phigros_{version}.apk", 'rb').read()).hexdigest()
+        apk_md5 = hashlib.md5(open(f"../temp/Phigros_{version}.apk", 'rb').read()).hexdigest()
         if apk_md5 != md5_apk:
             raise Exception("MD5 mismatch, download failed.")
         else:
@@ -73,15 +110,15 @@ def main():
     logger.info("APK is ready.")
 
     # Step 2 Unpack Apk
-    if not os.path.isdir("info") and not os.path.isdir("chart"):
-        gameInformation.run("Phigros_{}.apk".format(version))
-        unpack.run("Phigros_{}.apk".format(version))
+    if not os.path.isdir("../temp/info") and not os.path.isdir("../temp/chart"):
+        gameInformation.run("../temp/Phigros_{}.apk".format(version))
+        unpack.run("../temp/Phigros_{}.apk".format(version))
 
     # Step 3 Build file information table with md5
     if not DEBUG:
         md5_dict = build_md5_table()
     else:
-        with open('../Chart_info_New.json', 'r', encoding='utf-8') as md5_file:
+        with open('../data/Chart_info_New.json', 'r', encoding='utf-8') as md5_file:
             md5_dict = json.load(md5_file)['MD5']
 
     # Step 4 Compare MD5
@@ -129,8 +166,8 @@ def main():
     LEVELS = ["EZ", "HD", "IN", "AT"]
 
     # Step 5: Pack Charts into pez
-    if os.path.exists("output"):
-        shutil.rmtree("output")
+    if os.path.exists("../temp/output"):
+        shutil.rmtree("../temp/output")
     for song in New_Songs:
         for level in range(3 + int(New_Songs[song])):
             PezHelper(song[:-2], LEVELS[level], "NewSongs")

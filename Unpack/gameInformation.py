@@ -58,7 +58,11 @@ def run(path):
         # 仅包含存在的难度
         difficulty_dict[key] = {difficulty_labels[i]: levels[i] for i in range(len(levels))}
 
-    with open("info/difficulty.json", "w", encoding="utf8") as f:
+    if not os.path.isdir("../temp/info"):
+        os.mkdir("../temp/info")
+    # Debug
+    print(os.getcwd())
+    with open("../temp/info/difficulty.json", "w", encoding="utf8") as f:
         json.dump(difficulty_dict, f, ensure_ascii=False, indent=4)
 
     # 转换 info 为嵌套 JSON 格式并导出
@@ -75,7 +79,7 @@ def run(path):
             "AT": item[7] if len(item) > 7 else None
         }
 
-    with open("info/info.json", "w", encoding="utf8") as f:
+    with open("../temp/info/info.json", "w", encoding="utf8") as f:
         json.dump(info_nested, f, ensure_ascii=False, indent=4)
 
     logger.info("Run gameInformation completed")

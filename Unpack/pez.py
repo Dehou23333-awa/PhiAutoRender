@@ -76,7 +76,7 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
     # Read info.json
     infos = {}
     try:
-        with open("info/info.json", encoding="utf8") as f:
+        with open("../temp/info/info.json", encoding="utf8") as f:
             infos = json.load(f)
     except FileNotFoundError:
         logger.error("Error: info.json not found in info directory.")
@@ -88,7 +88,7 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
     # Read difficulty.json
     difficulties = {}
     try:
-        with open("info/difficulty.json", encoding="utf8") as f:
+        with open("../temp/info/difficulty.json", encoding="utf8") as f:
             difficulties = json.load(f)
     except FileNotFoundError:
         logger.error("Error: difficulty.json not found in info directory.")
@@ -109,9 +109,9 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
         return
 
     # Create .pez file
-    path = f"output/{type}"
+    path = f"../temp/output/{type}"
     if type == "NewSongs" or type == "DeletedSongs":
-        path = f"output/{type}/{track_id}"
+        path = f"../temp/output/{type}/{track_id}"
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -147,9 +147,9 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
             
             # Add files to .pez
             files = [
-                (f"chart/{track_id}.0/{level_name}.json", f"{track_id}.json"),
-                (f"Illustration/{track_id}.png", f"{track_id}.png"),
-                (f"music/{track_id}.ogg", f"{track_id}.ogg"),
+                (f"../temp/chart/{track_id}.0/{level_name}.json", f"{track_id}.json"),
+                (f"../temp/Illustration/{track_id}.png", f"{track_id}.png"),
+                (f"../temp/music/{track_id}.ogg", f"{track_id}.ogg"),
             ]
             
             for src, dst in files:

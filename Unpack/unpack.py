@@ -19,6 +19,8 @@ import logging
 logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+OUTPUT_DIR = "../temp"
+
 
 class ByteReader:
     """
@@ -49,12 +51,16 @@ def io():
             break
         else:
             path, resource = item
+            # 确保目标目录存在
+            full_path = os.path.abspath(os.path.join(OUTPUT_DIR, path))
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            
             if isinstance(resource, BytesIO):
                 with resource:
-                    with open(path, "wb") as f:
+                    with open(full_path, "wb") as f:
                         f.write(resource.getbuffer())
             else:
-                with open(path, "wb") as f:
+                with open(full_path, "wb") as f:
                     f.write(resource)
 
 
@@ -121,9 +127,9 @@ def run(path):
     负责读取APK，解析catalog.json，并分派任务进行解包。
     """
     # 创建输出目录
-    os.makedirs("music", exist_ok=True)
-    os.makedirs("chart", exist_ok=True)
-    os.makedirs("illustration", exist_ok=True)
+    os.makedirs("../temp/music", exist_ok=True)
+    os.makedirs("../temp/chart", exist_ok=True)
+    os.makedirs("../temp/illustration", exist_ok=True)
     logger.info("Output directories created")
 
     logger.info("Parsing catalog.json")
