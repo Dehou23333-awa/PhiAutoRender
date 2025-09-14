@@ -17,18 +17,18 @@ logger = logging.getLogger(__name__)
 starttime = time.time()
 
 logger.info("Starting Cleanup of previous outputs")
-cleanup()
+# cleanup()
 logger.info("Cleanup completed")
 
-logger.info("Starting Unpack process")
-unpack = subprocess.Popen("cd Unpack && python main.py", shell=True)
-unpack.wait()
-logger.info("Unpack completed, copying output to Render/input")
+# logger.info("Starting Unpack process")
+# unpack = subprocess.Popen("cd Unpack && python main.py", shell=True)
+# unpack.wait()
+# logger.info("Unpack completed, copying output to Render/input")
 
 
-# render = subprocess.Popen("cd Render && python render.py", shell=True)
-# render.wait()
-# logger.info("Render process completed")
+render = subprocess.Popen("cd Render && python render.py", shell=True)
+render.wait()
+logger.info("Render process completed")
 
-# endtime = time.time()
-# logger.info("Total time taken: %.2f seconds", endtime - starttime)
+endtime = time.time()
+logger.info("Total time taken: %.2f seconds", endtime - starttime)
