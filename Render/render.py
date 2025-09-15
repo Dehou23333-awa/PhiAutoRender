@@ -60,7 +60,7 @@ def main(fast=True):
             realname = file_path.replace('\\', '/').split('/')[-1]
 
             logger.info("Rendering file: %s", file_path)
-            renderHelper()
+            # renderHelper()
             cmd = ["python", "../Upload/main.py", pez_name, video_type]
             logger.debug("Running upload command: %s", ' '.join(cmd))
             subprocess.run(cmd, shell=True, check=True)

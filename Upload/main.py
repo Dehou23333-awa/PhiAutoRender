@@ -21,7 +21,7 @@ version = ""
 t = ""
 level = ""
 songname = ""
-Video_path = ""
+pez_name = ""
 video_type = ""
 
 async def upload(Title, Description, Cover_path, Video_path):
@@ -51,14 +51,15 @@ async def upload(Title, Description, Cover_path, Video_path):
     await uploader.start()
 
 def infoHelper(name):
-    with open("../Chart_info_New.json", encoding="utf8") as f:
+    name = name[:-3]
+    with open("../data/Chart_info_New.json", encoding="utf8") as f:
         infos = json.load(f)["INFO"]
     for key, value in infos.items():
         if (key) == name:
             return f"{value['Name']}"
         
 def anylizeHelper(name):
-    with open(f"../Unpack/chart/{name}.0/{level}.json", encoding="utf8") as f:
+    with open(f"../temp/chart/{name}.0/{level}.json", encoding="utf8") as f:
         chart = json.load(f)["judgeLineList"]
     des = "谱面信息："
     # BPM最小~最大
@@ -98,12 +99,18 @@ def anylizeHelper(name):
     return des
 
 def getsongtime(name):
-    audio = OggVorbis(f"../Unpack/music/{name}.ogg")
+    audio = OggVorbis(f"../temp/music/{name}.ogg")
     return round(audio.info.length, 2)
+
+def videopath(name):
+    for root, dirs, files in os.walk(f"../temp/videos/{name}"):
+        for file in files:
+            if file.endswith(".mp4"):
+                return os.path.abspath(f"../temp/videos/{file}")
 
 def description(name):
     global level, t, version
-    with open("../Chart_info_New.json", encoding="utf8") as f:
+    with open("../data/Chart_info_New.json", encoding="utf8") as f:
         infos = json.load(f)
     des = ""
     des += f"Phigros v{version} {t}\n"
@@ -120,13 +127,13 @@ def description(name):
     return des
 
 def illustrationHelper(name):
-    return f"../Unpack/illustration/{name}.png"
+    return f"../temp/illustration/{name}.png"
 
 def run():
-    global Video_path, video_type
+    global pez_name, video_type
     global version, t, level, songname
-    songname = infoHelper(Video_path[17:-7])
-    with open("../Chart_info_New.json", encoding="utf8") as f:
+    songname = infoHelper(pez_name)
+    with open("../data/Chart_info_New.json", encoding="utf8") as f:
         infos = json.load(f)
     version = infos['PhiVersion']
     if video_type == "Changed":
@@ -135,31 +142,36 @@ def run():
         t = "新歌"
     elif video_type == "NewAT":
         t = "新AT"
-    level = Video_path[17:-4][-2:]
+    level = pez_name[-2:]
+    print(level, pez_name, songname, version, t)
 
     Title = f"【Phigros 谱面演示/v{version}/{t}】" + songname + " " + level
-    Description = description(Video_path[17:-4])
+
+    Description = description(pez_name)
 
     # 不重复生成图片
-    Cover_path = illustrationHelper(Video_path[17:-7])
+    ill_path = illustrationHelper(pez_name[:-3])
+    Cover_Path = f"../temp/Covers/cover_{pez_name}.png"
     try:
-        Cover.run_pillow(Cover_path, f"../Upload/Covers/cover_{Video_path[17:-7]}.png", songname)
+        Cover.run_pillow(ill_path, Cover_Path, songname)
     except FileExistsError:
         pass
 
+    # print(Title, Description, Cover_path)
+
     logger.info("Title: %s", Title)
     logger.info("Description: %s", Description)
-    logger.info("Cover: %s", Cover_path)
-    logger.info("Video: %s", Video_path)
+    logger.info("Cover: %s", Cover_Path)
+    video_path = videopath(pez_name)
 
-    sync(upload(Title, Description, f"../Upload/Covers/cover_{Video_path[17:-7]}.png", Video_path))
+    logger.info("Video: %s", video_path)
+
+    sync(upload(Title, Description, Cover_Path, video_path))
 
 if __name__ == "__main__":
-    # Video_path = "../Render/output/雪降り雪が降っている.AiSSw夜輪ft結月ゆかり-IN.mp4"
-    # video_type = "NewSongs"
     if len(sys.argv) > 2:
-        Video_path = "../Render/output/" + sys.argv[1]
+        pez_name = sys.argv[1]
         video_type = sys.argv[2]
-    if not os.path.exists("../Upload/Covers"):
-        os.makedirs("../Upload/Covers")
+    if not os.path.exists("../temp/Covers"):
+        os.makedirs("../temp/Covers")
     run()
