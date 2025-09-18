@@ -1,5 +1,6 @@
 {
-    "Version": 131,
+    "Version": 132,
+    "PhiVersion": "3.15.1",
     "MD5": {
         "996.李化禹.0": {
             "EZ": "ac67d5da96bd412da2b75e5d2b9895db",
@@ -332,6 +333,7 @@
             "IN": "0ff16774ecf0d6a2fc89bea8d6fada14"
         },
         "DerRichter.Ωμεγα.0": {
+            "AT": "b06b8dbac4fb196b64e41188cccd9b23",
             "EZ": "d321c42c38f9078446970868cfdcaf09",
             "HD": "05f6f8001d34e6a44e816c952b822c26",
             "IN": "6ad3eddf1cbb2f18bd869ab50359bec9"
@@ -828,6 +830,7 @@
             "IN": "a8994dff516664c2c52e120d57e9323e"
         },
         "PANICPARADISE.DJSHIONY.0": {
+            "AT": "4fc7aee299af9a881f6a3a62e98b3af0",
             "EZ": "af32277e0ff4b14c5ec3575071dc6348",
             "HD": "ae1e27cfff4d0d81bdd04189dc468dfa",
             "IN": "52337eea7457fe91603be173c0af24b2"
@@ -946,9 +949,9 @@
             "IN": "93d69d7308ba350e1221eb3d31b58100"
         },
         "Rebirth.ああああ.0": {
-            "EZ": "aae747b86df9bd877bbc0db108892489",
+            "EZ": "b2314f2e2e327c2aa4610e21041263fd",
             "HD": "d05aa3cede9b2d3e2601a6d88281fabb",
-            "IN": "e1ffb00d03b2dc92557897b32e02d562"
+            "IN": "7c74cd1f99bb6bb584fcf0597ed34111"
         },
         "ReEndofaDream.umavsモリモリあつし.0": {
             "AT": "712399d4bf3cf9df0dbda5a5b7e4978b",
@@ -975,6 +978,11 @@
             "EZ": "7584e0b710e0c21240cb604aff52174c",
             "HD": "8ee6f6abc04c82edb2039cc396e05a17",
             "IN": "7f93d820a1d1b3273feb591e14ab685f"
+        },
+        "RetributionCycleofRedemption.ArdolfvsDaily天利.0": {
+            "EZ": "134bd6d37fdc3e3f81b125a41ae85f06",
+            "HD": "ed0e5c29078e257db989c5b98937b9f6",
+            "IN": "441a124857c6183c4fd6ce461e5b7e2d"
         },
         "Re_NascencePsystyleVer.Rinth_live.0": {
             "EZ": "10a470cef48073941719d1fe38c9d7d8",
@@ -1430,6 +1438,12 @@
             "HD": "5ed0fad5f5ce6e21136019d3892cfc91",
             "IN": "cd6404dff645c9d2951ddb4b2c38b0c0"
         },
+        "雪降り雪が降っている.AiSSw夜輪ft結月ゆかり.0": {
+            "AT": "8a8e2e7d0f5d25ddbbf250749d70243e",
+            "EZ": "b92a0337fb7eb4b7e500b32050c6109d",
+            "HD": "fea6094309ee3a0381aafdd531db2b78",
+            "IN": "d87ae76d48da3602e082d53ce002a667"
+        },
         "零號車輛.seatrus.0": {
             "EZ": "d6e59c5c07c2004ecaf7e4c16aade8f1",
             "HD": "b60fcad06eca69f7dbbebb63966f1a54",
@@ -1523,7 +1537,7 @@
         },
         "Cipher20.TetrajectoryfeatCtymax": {
             "Name": "Cipher : /2&//<|0",
-            "Composer": "Tetrajectory feat.Ctymax",
+            "Composer": "Tetrajectory feat. Ctymax",
             "illustrator": "IvyTowers",
             "EZ": "M3d1uM",
             "HD": "M3d1uM",
@@ -2000,7 +2014,7 @@
         },
         "Sein.朔Apo11oprogramvsお月さま交響曲ftkuroa荒巻": {
             "Name": "Sein",
-            "Composer": "朔(Apo11o program vs. お月さま交響曲) ft. kuroa×荒巻",
+            "Composer": "朔(Apo11o program vs. お月さま交響曲) ft. kuroa*×荒巻",
             "illustrator": "hideo",
             "EZ": "A.S.H",
             "HD": "A.S.H",
@@ -3745,13 +3759,31 @@
             "AT": null
         },
         "AvataarReincarnationofKalpa.ScarletteakaCrYmson": {
-            "Name": "Avataar~Reincarnation of Kalpa~",
+            "Name": "Avataar ~Reincarnation of Kalpa~",
             "Composer": "Scarlette a.k.a CrYmson",
             "illustrator": "QueseraGames Co., Ltd.",
             "EZ": "Su1fuR",
             "HD": "Su1fuR",
             "IN": "Salt",
             "AT": "XMT & Salt"
+        },
+        "雪降り雪が降っている.AiSSw夜輪ft結月ゆかり": {
+            "Name": "雪降り ~雪が降っている~",
+            "Composer": "AiSS w/ 夜輪 ft. 結月ゆかり",
+            "illustrator": "Vios.NoFurry.git",
+            "EZ": "Su1fuR",
+            "HD": "Su1fuR",
+            "IN": "XMT after BarbarNerSAN",
+            "AT": "小咩兔的多指课堂 vs. 上课睡大觉"
+        },
+        "RetributionCycleofRedemption.ArdolfvsDaily天利": {
+            "Name": "Retribution ~ Cycle of Redemption ~ ",
+            "Composer": "Ardolf vs. Daily天利",
+            "illustrator": "死と花の大祭司(ʌᴉoƨმᴉϝ);;",
+            "EZ": "StR-1 & 右果_Ary",
+            "HD": "StR-1 & 右果_Ary",
+            "IN": "Simon_Axis vs. Likey [Respect Ner as \"SP∆DE\"]",
+            "AT": null
         },
         "Poseidon.1112vsStar": {
             "Name": "Ποσειδών",
@@ -3886,7 +3918,7 @@
             "EZ": "Barianic Baradise",
             "HD": "Barianic Baradise",
             "IN": "Su1fuR -FAISEURS DE PANIQUE-",
-            "AT": null
+            "AT": "StR-1"
         },
         "ReEndofaDream.umavsモリモリあつし": {
             "Name": "Re：End of a Dream",
@@ -3940,7 +3972,7 @@
             "EZ": "Min(C,t,y)",
             "HD": "Max(C,t,y)",
             "IN": "Absolute(6)",
-            "AT": null
+            "AT": "Concat(Ramification,Richter)"
         },
         "ATHAZA.LeaF": {
             "Name": "ATHAZA",
@@ -3987,7 +4019,7 @@
         "Wintercube.CtymaxfeatNceS": {
             "EZ": "3.5",
             "HD": "8.2",
-            "IN": "13.4"
+            "IN": "13.3"
         },
         "Cipher20.TetrajectoryfeatCtymax": {
             "EZ": "5.0",
@@ -4129,7 +4161,7 @@
         "Chronologika.Hundotte": {
             "EZ": "3.5",
             "HD": "9.8",
-            "IN": "13.8"
+            "IN": "13.9"
         },
         "NickofTime.P4koo": {
             "EZ": "6.0",
@@ -4240,7 +4272,7 @@
         "RIPPER.Friedwav": {
             "EZ": "6.5",
             "HD": "11.7",
-            "IN": "15.3"
+            "IN": "15.4"
         },
         "Aphasia.闫东炜": {
             "EZ": "4.0",
@@ -4306,7 +4338,7 @@
         "RubbishSorting.CtymaxvsNceS": {
             "EZ": "3.5",
             "HD": "9.4",
-            "IN": "13.2"
+            "IN": "13.1"
         },
         "AnotherMe.NeutralMoon": {
             "EZ": "5.5",
@@ -4376,12 +4408,12 @@
         "GOODTEK.EBIMAYO": {
             "EZ": "5.0",
             "HD": "10.0",
-            "IN": "14.2"
+            "IN": "14.3"
         },
         "GOODBOUNCE.EBIMAYO": {
             "EZ": "7.5",
             "HD": "11.9",
-            "IN": "14.4"
+            "IN": "14.5"
         },
         "GOODWORLD.EBIMAYO": {
             "EZ": "3.0",
@@ -4411,7 +4443,7 @@
         "EndMe.ZxNXasDelaina": {
             "EZ": "5.5",
             "HD": "7.5",
-            "IN": "14.1"
+            "IN": "14.2"
         },
         "ParallelRetrogressionGameVer.Tetrajectory": {
             "EZ": "7.0",
@@ -4440,7 +4472,7 @@
         },
         "Aventyr.GrandThawRigelTheatre": {
             "EZ": "3.5",
-            "HD": "9.7",
+            "HD": "9.9",
             "IN": "13.7"
         },
         "Trane.MALVA": {
@@ -4491,7 +4523,7 @@
         "GetReady.iF": {
             "EZ": "6.0",
             "HD": "10.7",
-            "IN": "13.7"
+            "IN": "13.8"
         },
         "volcanic.DETROakaルゼ": {
             "EZ": "7.5",
@@ -4532,7 +4564,7 @@
         },
         "Apocalyptic.ZClaxxSumaiLight": {
             "EZ": "3.0",
-            "HD": "9.6",
+            "HD": "10.4",
             "IN": "13.8"
         },
         "游园地.椒盐菠萝": {
@@ -4618,7 +4650,7 @@
         "FutureMind.RayNauticaRekuMochizuki": {
             "EZ": "4.5",
             "HD": "11.0",
-            "IN": "14.3"
+            "IN": "14.2"
         },
         "Luminescent.Daison": {
             "EZ": "5.5",
@@ -4627,7 +4659,7 @@
         },
         "FULiAUTOBUSTER.MYUKKE": {
             "EZ": "3.5",
-            "HD": "9.8",
+            "HD": "9.7",
             "IN": "14.6"
         },
         "IMustSayNo.TangJuan": {
@@ -4685,12 +4717,12 @@
         "DataErr0r.Cosmograph": {
             "EZ": "6.0",
             "HD": "11.8",
-            "IN": "14.6"
+            "IN": "14.5"
         },
         "Shadow.SumaiLightvs姜米條": {
             "EZ": "6.5",
             "HD": "10.5",
-            "IN": "14.5",
+            "IN": "14.6",
             "AT": "16.2"
         },
         "心之所向.姜米條": {
@@ -4716,12 +4748,12 @@
         "盏茗.茶鸣拾贰律": {
             "EZ": "1.5",
             "HD": "4.5",
-            "IN": "13.3"
+            "IN": "13.4"
         },
         "青芽.茶鸣拾贰律": {
             "EZ": "5.0",
             "HD": "10.4",
-            "IN": "15.1"
+            "IN": "15.2"
         },
         "EternalSnow.AbyssIdols": {
             "EZ": "4.0",
@@ -4747,7 +4779,7 @@
         "BelieveLightfeat果丸哒呦.ScalerMestie果丸哒呦": {
             "EZ": "2.5",
             "HD": "8.9",
-            "IN": "14.5"
+            "IN": "14.6"
         },
         "Pontdessouvenirs.VeetaCrushvsitsufeatitsu": {
             "EZ": "5.5",
@@ -4847,7 +4879,7 @@
         "ぱぴぷぴぷぴぱ.ころねぽちWith立秋": {
             "EZ": "5.0",
             "HD": "12.3",
-            "IN": "15.8"
+            "IN": "15.9"
         },
         "TriumphRegret.typeMARS": {
             "EZ": "5.0",
@@ -4867,7 +4899,7 @@
         },
         "LabyrinthinKowloonWalledWorld.かめりあ": {
             "EZ": "6.0",
-            "HD": "11.1",
+            "HD": "11.4",
             "IN": "15.6"
         },
         "ComputeItWithSomeDevilishAlcoholicSteampunkEngines.かめりあ": {
@@ -4909,7 +4941,7 @@
         "SecretIllumination.Yooh": {
             "EZ": "5.0",
             "HD": "10.2",
-            "IN": "14.6"
+            "IN": "14.7"
         },
         "InvertedWorld.ARForest": {
             "EZ": "5.5",
@@ -4947,12 +4979,12 @@
         "ストレイソウルアラウンド.みーに": {
             "EZ": "6.0",
             "HD": "9.8",
-            "IN": "14.2"
+            "IN": "14.3"
         },
         "ManifoldHypothesis.cybermisofeattigerlily": {
             "EZ": "4.0",
             "HD": "9.1",
-            "IN": "14.7"
+            "IN": "14.6"
         },
         "KMoeVIP.ZxNX": {
             "EZ": "3.0",
@@ -4961,13 +4993,13 @@
         },
         "GVNGlitterVomitusandNeon.SaltySaltUnfold33": {
             "EZ": "5.0",
-            "HD": "9.5",
+            "HD": "9.7",
             "IN": "15.8"
         },
         "CrushBETA.shadow_bling": {
             "EZ": "4.0",
             "HD": "10.5",
-            "IN": "15.2"
+            "IN": "15.1"
         },
         "BrokenSky.JungoMAX3feat刘佳宜Snow幻影刃shadow": {
             "EZ": "3.0",
@@ -4982,7 +5014,7 @@
         "Xenolith.Tatsh": {
             "EZ": "4.0",
             "HD": "8.5",
-            "IN": "14.3"
+            "IN": "14.2"
         },
         "ArtificialExistence.JunKuroda": {
             "EZ": "3.5",
@@ -5010,7 +5042,7 @@
         "ShineAfter.ADeanJocularACE": {
             "EZ": "4.0",
             "HD": "9.7",
-            "IN": "14.4"
+            "IN": "14.6"
         },
         "Bloom.targ麻团qwq": {
             "EZ": "3.5",
@@ -5025,11 +5057,11 @@
         "千紫万紅.r0yvsWABI": {
             "EZ": "4.5",
             "HD": "12.1",
-            "IN": "15.6"
+            "IN": "15.5"
         },
         "明鏡烈火.MUEvsRekuMochizuki": {
             "EZ": "6.0",
-            "HD": "11.3",
+            "HD": "11.1",
             "IN": "15.9"
         },
         "今天不是明天.PIKASONICfeat兰音Reine": {
@@ -5061,12 +5093,12 @@
         "君往何处QuoVadis.M2U": {
             "EZ": "4.0",
             "HD": "8.6",
-            "IN": "14.2"
+            "IN": "14.1"
         },
         "暗夜苏醒REANIMATE.Warak": {
             "EZ": "5.0",
             "HD": "12.8",
-            "IN": "15.4"
+            "IN": "15.3"
         },
         "Grimheart.Puru": {
             "EZ": "3.0",
@@ -5081,7 +5113,7 @@
         "Originally.SNKSMizku": {
             "EZ": "1.0",
             "HD": "9.3",
-            "IN": "14.6"
+            "IN": "14.5"
         },
         "黄金之城GOLDTOWN.Memme": {
             "EZ": "2.0",
@@ -5096,13 +5128,13 @@
         "幻影鬼魅PLEASE.R300K": {
             "EZ": "5.5",
             "HD": "9.6",
-            "IN": "15.1",
+            "IN": "15.2",
             "AT": "17.0"
         },
         "Schadenfreude.ZxNX": {
             "EZ": "4.5",
             "HD": "10.6",
-            "IN": "15.2"
+            "IN": "15.1"
         },
         "Letempsperdu.Daison": {
             "EZ": "4.0",
@@ -5111,7 +5143,7 @@
         },
         "FixationsTowardtheStars.Foodbot": {
             "EZ": "3.5",
-            "HD": "10.8",
+            "HD": "10.9",
             "IN": "14.5"
         },
         "valorstarcross.LundyvsWyvren": {
@@ -5132,7 +5164,7 @@
         "Devotion.Connexio": {
             "EZ": "4.5",
             "HD": "9.6",
-            "IN": "13.9"
+            "IN": "13.7"
         },
         "KirakiraNoelStory.RekuMochizuki": {
             "EZ": "4.0",
@@ -5142,11 +5174,11 @@
         "Shelter.MeatyRabbitNceS": {
             "EZ": "3.5",
             "HD": "8.8",
-            "IN": "13.1"
+            "IN": "13.2"
         },
         "蝎虎天体Lacertid.CreamvsDaily天利": {
             "EZ": "4.5",
-            "HD": "10.7",
+            "HD": "10.8",
             "IN": "15.5"
         },
         "贝多芬祝福BeethovenBlessing.Nauts": {
@@ -5160,7 +5192,7 @@
             "IN": "12.2"
         },
         "ニライカナイNiraicA_naiMix.roopfromSTR": {
-            "EZ": "2.5",
+            "EZ": "3.0",
             "HD": "8.3",
             "IN": "13.5"
         },
@@ -5176,12 +5208,12 @@
         },
         "Resolver.Gomadare": {
             "EZ": "3.0",
-            "HD": "8.8",
-            "IN": "14.5"
+            "HD": "8.4",
+            "IN": "14.4"
         },
         "LuminousEntitiesLostHeart.NormalMfeatUsagiDenki": {
             "EZ": "5.0",
-            "HD": "10.9",
+            "HD": "10.7",
             "IN": "15.2"
         },
         "KIZUNAResolution.TAG": {
@@ -5191,8 +5223,8 @@
         },
         "AbsoluTedisoRdeR.AcuteDisarray": {
             "EZ": "6.5",
-            "HD": "12.3",
-            "IN": "16.2",
+            "HD": "12.4",
+            "IN": "16.3",
             "AT": "17.2"
         },
         "AphroditesChildshortver.RUQOA": {
@@ -5201,9 +5233,9 @@
             "IN": "13.3"
         },
         "DevIAtiOnshortver.polysha": {
-            "EZ": "5.0",
+            "EZ": "4.5",
             "HD": "11.1",
-            "IN": "15.6"
+            "IN": "15.7"
         },
         "NOx.Juggernaut": {
             "EZ": "4.5",
@@ -5212,14 +5244,14 @@
         },
         "Aliceinaxxxxxxxx.Nagiha": {
             "EZ": "5.0",
-            "HD": "9.7",
-            "IN": "15.7"
+            "HD": "9.5",
+            "IN": "15.8"
         },
         "Radiance.Nhato": {
             "EZ": "3.5",
-            "HD": "11.5",
+            "HD": "11.9",
             "IN": "14.0",
-            "AT": "15.5"
+            "AT": "15.6"
         },
         "DiamondDust.MasahiroGodspeedAoki": {
             "EZ": "5.0",
@@ -5236,11 +5268,11 @@
         "FrozenHeart.A39沙包P": {
             "EZ": "5.0",
             "HD": "10.6",
-            "IN": "14.4"
+            "IN": "14.6"
         },
         "Helios.NOABotaNya": {
-            "EZ": "4.5",
-            "HD": "9.2",
+            "EZ": "5.5",
+            "HD": "9.0",
             "IN": "14.1"
         },
         "FlutterEcho.Cansol": {
@@ -5259,9 +5291,20 @@
             "IN": "13.4",
             "AT": "16.6"
         },
+        "雪降り雪が降っている.AiSSw夜輪ft結月ゆかり": {
+            "EZ": "1.5",
+            "HD": "7.5",
+            "IN": "12.0",
+            "AT": "14.0"
+        },
+        "RetributionCycleofRedemption.ArdolfvsDaily天利": {
+            "EZ": "6.0",
+            "HD": "11.3",
+            "IN": "16.2"
+        },
         "Poseidon.1112vsStar": {
             "EZ": "6.0",
-            "HD": "8.4",
+            "HD": "8.8",
             "IN": "12.8",
             "AT": "16.2"
         },
@@ -5299,7 +5342,7 @@
         "Re_NascencePsystyleVer.Rinth_live": {
             "EZ": "5.5",
             "HD": "11.7",
-            "IN": "14.3"
+            "IN": "14.4"
         },
         "Ark.kanoryo": {
             "EZ": "3.5",
@@ -5336,7 +5379,8 @@
         "PANICPARADISE.DJSHIONY": {
             "EZ": "6.5",
             "HD": "11.5",
-            "IN": "15.4"
+            "IN": "15.4",
+            "AT": "16.4"
         },
         "ReEndofaDream.umavsモリモリあつし": {
             "EZ": "7.5",
@@ -5357,7 +5401,7 @@
         "NightTheater.わかどり": {
             "EZ": "4.0",
             "HD": "10.6",
-            "IN": "14.6"
+            "IN": "14.3"
         },
         "Ramification.rareguyReina": {
             "EZ": "5.0",
@@ -5367,7 +5411,8 @@
         "DerRichter.Ωμεγα": {
             "EZ": "5.5",
             "HD": "11.4",
-            "IN": "15.6"
+            "IN": "15.6",
+            "AT": "16.9"
         },
         "ATHAZA.LeaF": {
             "EZ": "8.1",
