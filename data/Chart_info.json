@@ -1,6 +1,6 @@
 {
-    "Version": 132,
-    "PhiVersion": "3.15.1",
+    "Version": 133,
+    "PhiVersion": "3.16.0",
     "MD5": {
         "996.李化禹.0": {
             "EZ": "ac67d5da96bd412da2b75e5d2b9895db",
@@ -333,7 +333,7 @@
             "IN": "0ff16774ecf0d6a2fc89bea8d6fada14"
         },
         "DerRichter.Ωμεγα.0": {
-            "AT": "b06b8dbac4fb196b64e41188cccd9b23",
+            "AT": "114a1676d00fbaa1b7e018df68dff268",
             "EZ": "d321c42c38f9078446970868cfdcaf09",
             "HD": "05f6f8001d34e6a44e816c952b822c26",
             "IN": "6ad3eddf1cbb2f18bd869ab50359bec9"
@@ -678,6 +678,11 @@
             "HD": "b76bfeed58dc68c4bd77233aa6f3b465",
             "IN": "ed5dbe36f49b641c346ff586d5a29580"
         },
+        "Komplexe.雄之助featSennzai.0": {
+            "EZ": "22dfebbc64747fb79dc38e48a538c8b3",
+            "HD": "444472ee6803c5de264002b2a4cae4c2",
+            "IN": "62cbdd07066a1e979f2d644d244cd292"
+        },
         "LabyrinthinKowloonWalledWorld.かめりあ.0": {
             "EZ": "358f6b0421713e3c349fffba8719a248",
             "HD": "e8c4cc2a603d81dff75a3c79e11589f6",
@@ -887,6 +892,12 @@
             "HD": "6d7cd4ad9a3618c097a74ffcc2b2aa3a",
             "IN": "65ab4ef33b212c183e6935310efca8bb"
         },
+        "QZKagoRequiem.tpazolite.0": {
+            "AT": "d7964b6e19ab71c1de51328b61cc78c1",
+            "EZ": "bcaf79bf62297877751730dc5123da38",
+            "HD": "ad3712c1156913a27574d1c1380ef5fe",
+            "IN": "8eff07e3b1448a7d459f62324a079d56"
+        },
         "Radiance.Nhato.0": {
             "AT": "f99c079e983f546b1d89bfffec0f701c",
             "EZ": "6fb13010c97f0c23aea6142aad3424b3",
@@ -1051,6 +1062,12 @@
             "EZ": "376b085feb73a351ce21a93f3ed4da92",
             "HD": "a2a491a5dea55fe154c95e527b8aa430",
             "IN": "f08841166647241828dfca777b2e2182"
+        },
+        "slips.rintarosoma.0": {
+            "AT": "486d8a50bcfc29aeeaf9fd00afcb388e",
+            "EZ": "d464a9035f49c530843967d65c1779c0",
+            "HD": "7c6a6d4effff9333c8f6489190dc46c4",
+            "IN": "3a7df129e8cd5aa76b0ac52d59e81f91"
         },
         "SnowDesert.WyvernP.0": {
             "EZ": "b13501d9eb0abe38c06a2da5c9cbed47",
@@ -1228,6 +1245,11 @@
             "EZ": "903628ee8728ade840a406c102bb86ff",
             "HD": "8aa6d60e2fc690e4f9e49b9cb938b5e8",
             "IN": "62947a195f52586fdcddbfa945333b6a"
+        },
+        "アンビバレンス.すりぃ相沢.0": {
+            "EZ": "ecbd411fe65929b7052219eac0430e33",
+            "HD": "bd0cb1ccb6a01dd61399ee3a428f3813",
+            "IN": "c76fe5d7a79ee5268896453658e72686"
         },
         "インフェルノシティ.Ponchifeatはぁち.0": {
             "EZ": "8455d0f4c70ae064f5291b1916afc443",
@@ -3785,6 +3807,42 @@
             "IN": "Simon_Axis vs. Likey [Respect Ner as \"SP∆DE\"]",
             "AT": null
         },
+        "アンビバレンス.すりぃ相沢": {
+            "Name": "アンビバレンス",
+            "Composer": "すりぃ×相沢",
+            "illustrator": "SEGA (祈莲 modified)",
+            "EZ": "XMT小咩兔",
+            "HD": "XMT小咩兔",
+            "IN": "弧光 With Opposition",
+            "AT": null
+        },
+        "Komplexe.雄之助featSennzai": {
+            "Name": "Komplexe",
+            "Composer": "雄之助 feat. Sennzai",
+            "illustrator": "SEGA (祈莲 modified)",
+            "EZ": "Helabot",
+            "HD": "右果_Ary",
+            "IN": "Likey",
+            "AT": null
+        },
+        "slips.rintarosoma": {
+            "Name": "sølips",
+            "Composer": "rintaro soma",
+            "illustrator": "SEGA (祈莲 modified)",
+            "EZ": "Helabot",
+            "HD": "Salt",
+            "IN": "St2.1GHz -Før The Pigeons-",
+            "AT": "ø"
+        },
+        "QZKagoRequiem.tpazolite": {
+            "Name": "QZKago Requiem",
+            "Composer": "t+pazolite",
+            "illustrator": "SEGA (祈莲 modified)",
+            "EZ": "-",
+            "HD": "Rikko EXPERT Life:999",
+            "IN": "Gausbon",
+            "AT": "Salt feat. M3ow"
+        },
         "Poseidon.1112vsStar": {
             "Name": "Ποσειδών",
             "Composer": "1112 vs. Star＊",
@@ -5301,6 +5359,28 @@
             "EZ": "6.0",
             "HD": "11.3",
             "IN": "16.2"
+        },
+        "アンビバレンス.すりぃ相沢": {
+            "EZ": "3.5",
+            "HD": "8.7",
+            "IN": "14.1"
+        },
+        "Komplexe.雄之助featSennzai": {
+            "EZ": "4.0",
+            "HD": "9.6",
+            "IN": "14.3"
+        },
+        "slips.rintarosoma": {
+            "EZ": "7.5",
+            "HD": "12.8",
+            "IN": "15.8",
+            "AT": "16.8"
+        },
+        "QZKagoRequiem.tpazolite": {
+            "EZ": "7.0",
+            "HD": "13.3",
+            "IN": "16.4",
+            "AT": "17.4"
         },
         "Poseidon.1112vsStar": {
             "EZ": "6.0",

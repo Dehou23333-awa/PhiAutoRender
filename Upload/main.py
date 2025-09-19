@@ -106,7 +106,7 @@ def videopath(name):
     for root, dirs, files in os.walk(f"../temp/videos/{name}"):
         for file in files:
             if file.endswith(".mp4"):
-                return os.path.abspath(f"../temp/videos/{file}")
+                return os.path.abspath(f"../temp/videos/{name}/{file}")
 
 def description(name):
     global level, t, version
@@ -166,7 +166,11 @@ def run():
 
     logger.info("Video: %s", video_path)
 
-    sync(upload(Title, Description, Cover_Path, video_path))
+    
+    try:
+        sync(upload(Title, Description, Cover_Path, video_path))
+    except Exception as e:
+        logger.error("Upload failed: %s", e)
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:
