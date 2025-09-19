@@ -13,6 +13,14 @@ PhiAutoRender 是一个基于 Python 的自动化渲染 Phigros 谱面的工具�
 
 ## 声明
 本项目仅供学习交流使用，请勿用于商业用途。请勿将本项目内的任何资源进行二次分发。
+
 本项目与 Phigros 官方无任何关联。
+
 本项目不保证任何功能的可用性和稳定性，使用过程中出现的任何问题与本项目无关。
+
 使用本项目即视为同意以上声明。
+
+# 参考项目
+- [Phigros Resource by 7aGiven](https://github.com/7aGiven/Phigros_Resource/)
+- [Phi Recorder by HLMC](https://github.com/2278535805/Phi-Recorder/)
+- [Resource Auto by HLMC](https://github.com/2278535805/Resource_Auto/)
