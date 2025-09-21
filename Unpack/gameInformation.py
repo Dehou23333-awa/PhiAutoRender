@@ -32,6 +32,7 @@ def run(path):
 
     difficulty = []
     table = []
+
     for key, songs in GameInformation["song"].items():
         if key == "otherSongs":
             continue
@@ -45,41 +46,49 @@ def run(path):
                 song["difficulty"][i] = str(round(song["difficulty"][i], 1))
             song["songsId"] = song["songsId"][:-2]
             difficulty.append([song["songsId"]]+song["difficulty"])
-            table.append((song["songsId"], song["songsName"], song["composer"], song["illustrator"], *song["charter"]))
+            table.append((song["songsId"], song["songsName"], song["composer"], song["illustrator"], song["previewTime"], song["previewEndTime"], *song["charter"]))
 
     logger.info("Successfully processed game information")
 
-    # 导出 difficulty.json 格式（在 difficulty 已经生成后）
+    # 创建歌曲ID到章节的映射
+    song_to_chapter = {}
+    for chapter in GameInformation["chapters"]:
+        chapter_name = chapter["songInfo"]["banner"]
+        for song in chapter["songInfo"]["songs"]:
+            song_id = song["songsId"][:-2]  # 去掉后缀
+            song_to_chapter[song_id] = chapter_name
+
+    # 合并难度和详细信息到一个 JSON 文件
     difficulty_labels = ["EZ", "HD", "IN", "AT"]
-    difficulty_dict = {}
-    for item in difficulty:
-        key = item[0]
-        levels = item[1:]
-        # 仅包含存在的难度
-        difficulty_dict[key] = {difficulty_labels[i]: levels[i] for i in range(len(levels))}
-
-    if not os.path.isdir("../temp/info"):
-        os.mkdir("../temp/info")
-    # Debug
-    print(os.getcwd())
-    with open("../temp/info/difficulty.json", "w", encoding="utf8") as f:
-        json.dump(difficulty_dict, f, ensure_ascii=False, indent=4)
-
-    # 转换 info 为嵌套 JSON 格式并导出
-    info_nested = {}
+    difficulty_dict = {item[0]: item[1:] for item in difficulty}
+    merged_data = {}
+    
     for item in table:
         key = item[0]
-        info_nested[key] = {
+        levels = difficulty_dict.get(key, [])
+        
+        # 构建基本歌曲信息
+        song_data = {
             "Name": item[1],
             "Composer": item[2],
             "illustrator": item[3],
-            "EZ": item[4] if len(item) > 4 else None,
-            "HD": item[5] if len(item) > 5 else None,
-            "IN": item[6] if len(item) > 6 else None,
-            "AT": item[7] if len(item) > 7 else None
+            "chapter": song_to_chapter.get(key, "Unknown"),
+            "previewTime": round(item[4], 2),
+            "previewEndTime": round(item[5], 2)
         }
-
-    with open("../temp/info/info.json", "w", encoding="utf8") as f:
-        json.dump(info_nested, f, ensure_ascii=False, indent=4)
+        
+        # 直接添加难度信息到根级别
+        for i in range(len(levels)):
+            song_data[difficulty_labels[i]] = {
+                "charter": item[6 + i],
+                "difficulty": levels[i]
+            }
+        
+        merged_data[key] = song_data
 
     logger.info("Run gameInformation completed")
+    return merged_data
+
+if __name__ == "__main__":
+    import sys
+    print(run(sys.argv[1]))

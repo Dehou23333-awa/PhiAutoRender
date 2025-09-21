@@ -73,40 +73,11 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
         logger.error(f"Error: Invalid level {level_name}. Must be one of {LEVELS}.")
         return
 
-    # Read info.json
-    infos = {}
-    try:
-        with open("../temp/info/info.json", encoding="utf8") as f:
-            infos = json.load(f)
-    except FileNotFoundError:
-        logger.error("Error: info.json not found in info directory.")
-        return
-    except Exception as e:
-        logger.error(f"Error reading info.json: {e}")
-        return
-
-    # Read difficulty.json
-    difficulties = {}
-    try:
-        with open("../temp/info/difficulty.json", encoding="utf8") as f:
-            difficulties = json.load(f)
-    except FileNotFoundError:
-        logger.error("Error: difficulty.json not found in info directory.")
-        return
-    except Exception as e:
-        logger.error(f"Error reading difficulty.json: {e}")
-        return
-
-    if track_id not in infos:
-        logger.error(f"Error: Track ID {track_id} not found in info.json.")
-        return
+    # Read data
+    with open("../data/Chart_info_New.json", "r", encoding="utf8") as f:
+        infos = json.load(f)["INFO"]
 
     info = infos[track_id]
-    
-    # Check if the track has the requested difficulty level
-    if track_id not in difficulties or level_name not in difficulties[track_id] or difficulties[track_id][level_name] is None:
-        logger.error(f"Error: Track {track_id} has no {level_name} difficulty.")
-        return
 
     # Create .pez file
     path = f"../temp/output/{type}"
@@ -133,10 +104,10 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
                 f"Song: {track_id}.ogg\n"
                 f"Picture: {track_id}.png\n"
                 f"Chart: {track_id}.json\n"
-                f"Level: {level_name} Lv.{difficulties[track_id][level_name]}\n"
+                f"Level: {level_name} Lv.{info[level_name]['difficulty']}\n"
                 f"Composer: {info['Composer']}\n"
                 f"Illustrator: {info['illustrator']}\n"
-                f"Charter: {info[level_name]}"
+                f"Charter: {info[level_name]['charter']}"
             )
             pez.writestr("info.txt", info_txt)
 

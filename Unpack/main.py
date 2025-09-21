@@ -37,7 +37,7 @@ def download(url):
 
 url, md5_apk, version, Phiversion = "","", "", ""
 
-def build_md5_table():
+def build_md5_table(info_data):
     md5_dict = {}
     logger.info("Building file information table with MD5 hashes")
     for root, dirs, files in os.walk('../temp/chart'):
@@ -54,14 +54,8 @@ def build_md5_table():
                     md5 = hashlib.md5(f.read()).hexdigest()
                     md5_dict[folder_name][level] = md5
 
-    with open("../temp/info/info.json", "r", encoding='utf-8') as info_file:
-        info_data = json.load(info_file)
-
-    with open("../temp/info/difficulty.json", "r", encoding='utf-8') as diff_file:
-        diff_data = json.load(diff_file)
-
     with open('../data/Chart_info_New.json', 'w', encoding='utf-8') as md5_file:
-        json.dump({"Version":version,"PhiVersion":Phiversion,"MD5":md5_dict,"INFO":info_data,"DIFFICULTY":diff_data}, md5_file, indent=4, ensure_ascii=False)
+        json.dump({"Version":version,"PhiVersion":Phiversion,"MD5":md5_dict,"INFO":info_data}, md5_file, indent=4, ensure_ascii=False)
 
     logger.info("MD5 table successfully created")
     return md5_dict
@@ -110,13 +104,13 @@ def main():
     logger.info("APK is ready.")
 
     # Step 2 Unpack Apk
+    info = gameInformation.run("../temp/Phigros_{}.apk".format(version))
     if not os.path.isdir("../temp/info") and not os.path.isdir("../temp/chart"):
-        gameInformation.run("../temp/Phigros_{}.apk".format(version))
         unpack.run("../temp/Phigros_{}.apk".format(version))
 
     # Step 3 Build file information table with md5
     if not DEBUG:
-        md5_dict = build_md5_table()
+        md5_dict = build_md5_table(info)
     else:
         with open('../data/Chart_info_New.json', 'r', encoding='utf-8') as md5_file:
             md5_dict = json.load(md5_file)['MD5']

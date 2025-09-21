@@ -119,6 +119,18 @@ def save(key, entry, pool):
         music_path = os.path.join("music", f"{song_id}.ogg")
         pool.submit(save_music, music_path, obj)
 
+    # 检查是否为愚人节曲绘
+    elif key[-19:-3] == ".1/Illustration.":
+        song_id = key[:-19]
+        illustration_path = os.path.join("illustration", f"{song_id}.1.png")
+        pool.submit(save_image, illustration_path, obj.image)
+
+    # 检查是否为愚人节音乐文件
+    elif key[-12:] == ".1/music.wav":
+        song_id = key[:-12]
+        music_path = os.path.join("music", f"{song_id}.1.ogg")
+        pool.submit(save_music, music_path, obj)
+
 
 def run(path):
     logger.info("Starting unpack process for: %s", path)
@@ -206,3 +218,6 @@ def run(path):
     io_thread.join()
     logger.info("All assets processed successfully")
     logger.info("Unpack process completed")
+
+if __name__ == "__main__":
+    run(sys.argv[1])
