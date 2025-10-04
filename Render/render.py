@@ -4,8 +4,11 @@ import os
 import zipfile
 import shutil
 import zipfile
+import dotenv
 
-PhiRecorderPath = r"C:\Users\Moxiao\AppData\Local\phi-recorder\phi-recorder.exe"
+dotenv.load_dotenv()
+
+PhiRecorderPath = os.getenv("PhiRecorderPath")
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
@@ -64,7 +67,15 @@ def main(fast=True):
                 continue
 
             logger.info("Rendering file: %s", file_path)
-            renderHelper()
+            try:
+                renderHelper()
+            except Exception as e:
+                logger.warning("Rendering failed for %s: %s. Retrying...", pez_name, e)
+                try:
+                    renderHelper()
+                except Exception as e:
+                    logger.error("Rendering failed again for %s: %s. Skipping this file.", pez_name, e)
+                    continue
             cmd = ["python", "../Upload/main.py", pez_name, video_type]
             logger.debug("Running upload command: %s", ' '.join(cmd))
             subprocess.run(cmd, shell=True, check=True)

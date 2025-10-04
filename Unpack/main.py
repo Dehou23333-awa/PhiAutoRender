@@ -98,7 +98,13 @@ def main():
         logger.info("Checking MD5...")
         apk_md5 = hashlib.md5(open(f"../temp/Phigros_{version}.apk", 'rb').read()).hexdigest()
         if apk_md5 != md5_apk:
-            raise Exception("MD5 mismatch, download failed.")
+            # Retry download once
+            logger.warning("MD5 mismatch, retrying download...")
+            download(url)
+            apk_md5 = hashlib.md5(open(f"../temp/Phigros_{version}.apk", 'rb').read()).hexdigest()
+            if apk_md5 != md5_apk:
+                raise Exception("MD5 mismatch after retry, download failed.")
+            logger.info("MD5 check passed after retry.")
         else:
             logger.info("MD5 check passed.")
     logger.info("APK is ready.")
@@ -156,6 +162,9 @@ def main():
     logger.debug("Changed Charts: {}".format(Changed_Charts))
     logger.debug("New AT Songs: {}".format(New_AT_Songs))
     logger.debug("Deleted Songs: {}".format(Deleted_Songs))
+
+    if len(New_Songs) + len(Changed_Charts) + len(New_AT_Songs) + len(Deleted_Songs) > 50:
+        logger.warning("Too many changes detected, please check manually.")
 
     LEVELS = ["EZ", "HD", "IN", "AT"]
 

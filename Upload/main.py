@@ -116,11 +116,9 @@ def description(name):
     des += f"Phigros v{version} {t}\n"
     for key, value in infos["INFO"].items():
         if (key) == name[:-3]:
-            des += f"名称：{value['Name']}\n曲师：{value['Composer']}\n画师：{value['illustrator']}\n谱师：{value[level]}"
-    for key, value in infos["DIFFICULTY"].items():
-        if (key) == name[:-3]:
+            des += f"名称：{value['Name']}\n曲师：{value['Composer']}\n画师：{value['illustrator']}\n谱师：{value[level]['charter']}"
             if level in value:
-                des += f"\n难度：{level} Lv.{value[level]}"
+                des += f"\n难度：{level} Lv.{value[level]['difficulty']}"
     des += f"\n曲目时长：{getsongtime(name[:-3])}s\n\n"
     des += anylizeHelper(name[:-3])
     des += "\n\n定数、物量、Note数、判定线数、曲目时长、BPM等由程序获取\n本视频由 PhiAutoRender 自动生成。如有侵权请联系删除。\n渲染：Phi-Recorder By HLMC离开"
@@ -167,10 +165,19 @@ def run():
     logger.info("Video: %s", video_path)
 
     
-    try:
-        sync(upload(Title, Description, Cover_Path, video_path))
-    except Exception as e:
-        logger.error("Upload failed: %s", e)
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            sync(upload(Title, Description, Cover_Path, video_path))
+            logger.info("Upload successful!")
+            break
+        except Exception as e:
+            if attempt < max_retries - 1:
+                logger.warning(f"Upload failed (attempt {attempt + 1}/{max_retries}): %s", e)
+                logger.info("Retrying...")
+            else:
+                logger.error(f"Upload failed after {max_retries} attempts: %s", e)
+                raise
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:
