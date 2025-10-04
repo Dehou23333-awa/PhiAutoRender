@@ -38,27 +38,39 @@ def download(url):
 url, md5_apk, version, Phiversion = "","", "", ""
 
 def build_md5_table(info_data):
-    md5_dict = {}
     logger.info("Building file information table with MD5 hashes")
+    
+    # 遍历文件夹计算MD5
     for root, dirs, files in os.walk('../temp/chart'):
         folder_name = os.path.basename(root)
         if folder_name == 'chart':
             continue
-        if folder_name not in md5_dict:
-            md5_dict[folder_name] = {}
+        
+        # 提取歌曲ID (去掉最后的.0后缀)
+        song_id = folder_name[:-2] if folder_name.endswith('.0') else folder_name
+        
+        # 如果info_data中不存在这个歌曲，跳过
+        if song_id not in info_data:
+            logger.warning(f"Song {song_id} found in chart folder but not in info_data")
+            continue
+        
+        # 为每个难度添加MD5字段
         for file in files:
             level = os.path.splitext(file)[0].split('-')[-1].upper()
             if level in ['EZ', 'HD', 'IN', 'AT']:
                 file_path = os.path.join(root, file)
                 with open(file_path, 'rb') as f:
                     md5 = hashlib.md5(f.read()).hexdigest()
-                    md5_dict[folder_name][level] = md5
+                    # 将MD5添加到对应难度的info中
+                    if level in info_data[song_id]:
+                        info_data[song_id][level]["md5"] = md5
 
-    with open('../data/Chart_info_New.json', 'w', encoding='utf-8') as md5_file:
-        json.dump({"Version":version,"PhiVersion":Phiversion,"MD5":md5_dict,"INFO":info_data}, md5_file, indent=4, ensure_ascii=False)
+    # 保存合并后的数据
+    with open('../data/Chart_info_New.json', 'w', encoding='utf-8') as info_file:
+        json.dump({"Version": version, "PhiVersion": Phiversion, "Songs": info_data}, info_file, indent=4, ensure_ascii=False)
 
-    logger.info("MD5 table successfully created")
-    return md5_dict
+    logger.info("MD5 table successfully created and merged into info data")
+    return info_data
 
 
 def main():
@@ -116,10 +128,10 @@ def main():
 
     # Step 3 Build file information table with md5
     if not DEBUG:
-        md5_dict = build_md5_table(info)
+        songs_data = build_md5_table(info)
     else:
-        with open('../data/Chart_info_New.json', 'r', encoding='utf-8') as md5_file:
-            md5_dict = json.load(md5_file)['MD5']
+        with open('../data/Chart_info_New.json', 'r', encoding='utf-8') as info_file:
+            songs_data = json.load(info_file)['Songs']
 
     # Step 4 Compare MD5
     # New songs added. Check if the song has "AT" Level
@@ -128,42 +140,45 @@ def main():
     Changed_Charts = {}
     # Special: Check if a song that had no "AT" Level was added a "AT" Level
     New_AT_Songs = {}
-    # Deleted Songs
-    Deleted_Songs = {}
+    
+    # 加载旧数据
+    old_songs_data = old_chart_info.get("Songs", {})
+    
     # Main Logic
-    for song, levels in md5_dict.items():
-        for level, md5 in levels.items():
+    for song, song_info in songs_data.items():
+        # 检查是否是新歌曲
+        if song not in old_songs_data:
+            # 检查是否有AT难度
+            has_at = "AT" in song_info and "md5" in song_info["AT"]
+            logger.info("Found new song: {} {}".format(song, "with AT level" if has_at else "without AT level"))
+            New_Songs[song] = 1 if has_at else 0
+            continue
+        
+        # 检查现有歌曲的变化
+        old_song_info = old_songs_data[song]
+        for level in ['EZ', 'HD', 'IN', 'AT']:
+            # 检查新增的AT难度
             if level == "AT":
-                if song in old_chart_info["MD5"] and "AT" not in old_chart_info["MD5"][song]:
-                    logger.info("Found new AT level for song: {}".format(song))
-                    New_AT_Songs[song] = 1
-            if song not in old_chart_info["MD5"] and song not in New_Songs:
-                # Check if the song has AT level
-                if "AT" in levels:
-                    logger.info("Found new AT level for song: {}".format(song))
-                    New_Songs[song] = 1
-                else:
-                    logger.info("Found new song without AT level: {}".format(song))
-                    New_Songs[song] = 0
-            # Changed songs
-            if song in old_chart_info["MD5"] and level in old_chart_info["MD5"][song] and old_chart_info["MD5"][song][level] != md5:
-                logger.info("Found changed song: {}, {}".format(song, level))
-                if song not in Changed_Charts:
-                    Changed_Charts[song] = []
-                Changed_Charts[song].append(level)
-
-    # 查看被删除的歌
-    for song in old_chart_info["MD5"]:
-        if song not in md5_dict:
-            logger.info("Found deleted song: {}".format(song))
-            Deleted_Songs[song] = 1
+                if level in song_info and "md5" in song_info[level]:
+                    if level not in old_song_info or "md5" not in old_song_info[level]:
+                        logger.info("Found new AT level for song: {}".format(song))
+                        New_AT_Songs[song] = 1
+                        continue
+            
+            # 检查MD5变化
+            if level in song_info and "md5" in song_info[level]:
+                if level in old_song_info and "md5" in old_song_info[level]:
+                    if song_info[level]["md5"] != old_song_info[level]["md5"]:
+                        logger.info("Found changed chart: {}, {}".format(song, level))
+                        if song not in Changed_Charts:
+                            Changed_Charts[song] = []
+                        Changed_Charts[song].append(level)
 
     logger.debug("New Songs: {}".format(New_Songs))
     logger.debug("Changed Charts: {}".format(Changed_Charts))
     logger.debug("New AT Songs: {}".format(New_AT_Songs))
-    logger.debug("Deleted Songs: {}".format(Deleted_Songs))
 
-    if len(New_Songs) + len(Changed_Charts) + len(New_AT_Songs) + len(Deleted_Songs) > 50:
+    if len(New_Songs) + len(Changed_Charts) + len(New_AT_Songs) > 50:
         logger.warning("Too many changes detected, please check manually.")
 
     LEVELS = ["EZ", "HD", "IN", "AT"]
@@ -173,15 +188,12 @@ def main():
         shutil.rmtree("../temp/output")
     for song in New_Songs:
         for level in range(3 + int(New_Songs[song])):
-            PezHelper(song[:-2], LEVELS[level], "NewSongs")
+            PezHelper(song, LEVELS[level], "NewSongs")
     for song in Changed_Charts:
         for level in Changed_Charts[song]:
-            PezHelper(song[:-2], level, "Changed")
+            PezHelper(song, level, "Changed")
     for song in New_AT_Songs:
-        PezHelper(song[:-2], "AT", "NewAT")
-    for song in Deleted_Songs:
-        for level in range(3 + int(Deleted_Songs[song])):
-            PezHelper(song[:-2], LEVELS[level], "DeletedSongs")
+        PezHelper(song, "AT", "NewAT")
 
 if __name__ == "__main__":
     main()

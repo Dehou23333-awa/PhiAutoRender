@@ -62,10 +62,6 @@ def main(fast=True):
             pez_name = queryname(file_path)
             realname = file_path.replace('\\', '/').split('/')[-1]
 
-            if os.path.exists(f"../temp/videos/{pez_name}"):
-                logger.info("Video for %s already exists, skipping rendering.", pez_name)
-                continue
-
             logger.info("Rendering file: %s", file_path)
             try:
                 renderHelper()

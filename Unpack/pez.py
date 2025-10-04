@@ -75,7 +75,7 @@ def create_pez(track_id, level_name, type, isDebug=False, Ratio="16:9"):
 
     # Read data
     with open("../data/Chart_info_New.json", "r", encoding="utf8") as f:
-        infos = json.load(f)["INFO"]
+        infos = json.load(f)["Songs"]
 
     info = infos[track_id]
 

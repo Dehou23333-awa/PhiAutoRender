@@ -53,7 +53,7 @@ async def upload(Title, Description, Cover_path, Video_path):
 def infoHelper(name):
     name = name[:-3]
     with open("../data/Chart_info_New.json", encoding="utf8") as f:
-        infos = json.load(f)["INFO"]
+        infos = json.load(f)["Songs"]
     for key, value in infos.items():
         if (key) == name:
             return f"{value['Name']}"
@@ -114,7 +114,7 @@ def description(name):
         infos = json.load(f)
     des = ""
     des += f"Phigros v{version} {t}\n"
-    for key, value in infos["INFO"].items():
+    for key, value in infos["Songs"].items():
         if (key) == name[:-3]:
             des += f"名称：{value['Name']}\n曲师：{value['Composer']}\n画师：{value['illustrator']}\n谱师：{value[level]['charter']}"
             if level in value:
