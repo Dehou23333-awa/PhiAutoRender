@@ -9,6 +9,9 @@ import logging
 import time
 import shutil
 import aria2p
+import dotenv
+
+dotenv.load_dotenv()
 
 DEBUG = False
 
@@ -19,8 +22,8 @@ logger = logging.getLogger(__name__)
 aria2 = aria2p.API(
     aria2p.Client(
         host="http://localhost",
-        port=16800,
-        secret="6365tHRnPmb2"
+        port=os.getenv("Aria2Port"),
+        secret=os.getenv("Aria2Secret")
     )
 )
 

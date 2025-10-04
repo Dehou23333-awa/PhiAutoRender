@@ -8,3 +8,4 @@ bilibili-api-python
 aiohttp
 dotenv
 mutagen
+aria2p

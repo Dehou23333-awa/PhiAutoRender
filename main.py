@@ -2,16 +2,26 @@ import subprocess
 import logging
 import time
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 def cleanup():
     """清理之前的输出文件和临时文件"""
     subprocess.run("rd /s /q temp", shell=True)
+
+def setup():
+    """初始化"""
+    raise FileNotFoundError("Please create a .env file based on .env.example and fill in the required fields.")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 starttime = time.time()
+
+if not os.path.exists(".env"):
+    setup()
 
 logger.info("Starting Cleanup of previous outputs")
 cleanup()
