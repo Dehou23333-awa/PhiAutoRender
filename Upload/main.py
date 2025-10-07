@@ -103,10 +103,7 @@ def getsongtime(name):
     return round(audio.info.length, 2)
 
 def videopath(name):
-    for root, dirs, files in os.walk(f"../temp/videos/{name}"):
-        for file in files:
-            if file.endswith(".mp4"):
-                return os.path.abspath(f"../temp/videos/{name}/{file}")
+    return os.path.abspath(f"../temp/videos/{name}.mp4")
 
 def description(name):
     global level, t, version
@@ -163,6 +160,8 @@ def run():
     video_path = videopath(pez_name)
 
     logger.info("Video: %s", video_path)
+
+    exit(-1) # 先关闭上传功能，避免误传
 
     
     max_retries = 3

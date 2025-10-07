@@ -9,3 +9,4 @@ aiohttp
 dotenv
 mutagen
 aria2p
+tqdm

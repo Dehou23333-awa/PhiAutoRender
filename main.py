@@ -30,7 +30,7 @@ logger.info("Cleanup completed")
 logger.info("Starting Unpack process")
 unpack = subprocess.Popen("cd Unpack && python main.py", shell=True)
 unpack.wait()
-logger.info("Unpack completed, copying output to Render/input")
+logger.info("Unpack completed.")
 
 
 render = subprocess.Popen("cd Render && python render.py", shell=True)

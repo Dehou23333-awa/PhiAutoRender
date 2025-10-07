@@ -14,6 +14,7 @@ from zipfile import ZipFile
 from fsb5 import FSB5
 from fsb5 import vorbis
 import logging
+from tqdm import tqdm
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='[%(name)s][%(funcName)s] %(asctime)s - %(levelname)s - %(message)s')
@@ -37,6 +38,8 @@ class ByteReader:
 
 # 用于异步文件I/O的队列
 queue_in = Queue()
+# 用于跟踪I/O进度的全局变量
+io_progress_bar = None
 
 
 def io():
@@ -44,10 +47,13 @@ def io():
     """
     在单独的线程中处理文件写入操作，避免I/O阻塞。
     """
+    global io_progress_bar
     while True:
         item = queue_in.get()
         if item is None:
             logger.info("I/O thread received termination signal")
+            if io_progress_bar is not None:
+                io_progress_bar.close()
             break
         else:
             path, resource = item
@@ -62,6 +68,10 @@ def io():
             else:
                 with open(full_path, "wb") as f:
                     f.write(resource)
+            
+            # 更新I/O进度条
+            if io_progress_bar is not None:
+                io_progress_bar.update(1)
 
 
 def save_image(path, image):
@@ -96,6 +106,8 @@ def save(key, entry, pool):
     # 过滤并读取对象，此逻辑未作更改
     obj = entry.get_filtered_objects(classes)
     obj = next(obj).read()
+
+    global io_progress_bar
 
     # 检查是否为谱面文件
     if key[-14:-7] == "/Chart_" and key[-5:] == ".json":
@@ -191,6 +203,34 @@ def run(path):
             table[i][0] = table[i][0][14:]
     # --- catalog.json解析逻辑结束 ---
 
+    # 第一遍：计算总的文件数
+    total_files = 0
+    with ZipFile(path) as apk:
+        for key, bundle_hash in table:
+            asset_data = apk.read(f"assets/aa/Android/{bundle_hash}")
+            env = Environment()
+            env.load_file(asset_data, name=key)
+            
+            for internal_key, internal_entry in env.files.items():
+                # 过滤并检查是否为需要的文件类型
+                try:
+                    obj_iter = internal_entry.get_filtered_objects(classes)
+                    obj = next(obj_iter)
+                    
+                    # 检查是否符合保存条件
+                    if (internal_key[-14:-7] == "/Chart_" and internal_key[-5:] == ".json" or
+                        internal_key[-19:-3] == ".0/Illustration." or
+                        internal_key[-12:] == ".0/music.wav" or
+                        internal_key[-19:-3] == ".1/Illustration." or
+                        internal_key[-12:] == ".1/music.wav"):
+                        total_files += 1
+                except:
+                    pass
+
+    # 初始化I/O进度条
+    global io_progress_bar
+    io_progress_bar = tqdm(total=total_files, desc="保存文件", unit="个文件", position=1)
+
     # 启动文件I/O线程
     io_thread = threading.Thread(target=io)
     io_thread.start()
@@ -202,22 +242,29 @@ def run(path):
         logger.info("Starting asset processing")
         # 原始代码中的完整解包逻辑，移除了与UPDATE配置相关的if/else分支
         with ZipFile(path) as apk:
-            for key, bundle_hash in table:
-                # 读取Unity资源包
-                asset_data = apk.read(f"assets/aa/Android/{bundle_hash}")
-                env = Environment()
-                env.load_file(asset_data, name=key)
-                
-                # 遍历资源包内的文件并进行保存
-                for internal_key, internal_entry in env.files.items():
-                    save(internal_key, internal_entry, pool)
+            # 添加进度条显示处理进度
+            with tqdm(total=len(table), desc="解包资源", unit="个bundle", position=0) as pbar:
+                for key, bundle_hash in table:
+                    # 读取Unity资源包
+                    asset_data = apk.read(f"assets/aa/Android/{bundle_hash}")
+                    env = Environment()
+                    env.load_file(asset_data, name=key)
+                    
+                    # 遍历资源包内的文件并进行保存
+                    for internal_key, internal_entry in env.files.items():
+                        save(internal_key, internal_entry, pool)
+                    
+                    # 更新进度条
+                    pbar.update(1)
 
     # 所有任务已提交，向I/O队列发送结束信号
     queue_in.put(None)
     # 等待I/O线程完成所有文件写入
     io_thread.join()
+    
+    elapsed_time = time.time() - ti
     logger.info("All assets processed successfully")
-    logger.info("Unpack process completed")
+    logger.info(f"Unpack process completed in {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
     run(sys.argv[1])

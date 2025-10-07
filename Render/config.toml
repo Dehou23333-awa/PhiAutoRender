@@ -1,17 +1,19 @@
 # Output 输出
-resolution = [1920, 1080] # [width, height]
+resolution = [1920, 1080]
 fps = 60
 sampleCount = 2
 hardwareAccel = true
 hevc = true
 mpeg4 = false
 # customEncoder = ""
+fileNameFormat = "%date% %time% %info.name%_%level_prefix%"
 ffmpegPreset = "medium p4 medium balanced" # "cpu nvenc qsv amf" or "any"
 dynamicBitrateControl = true
 bitrate = "26"
 endingLength = 0.0
 renderStartTime = 0.0
 # renderEndTime = 
+renderLoading = false
 
 
 # Player 玩家
@@ -24,23 +26,15 @@ challengeRank = 3
 
 # Graphics 图像
 # res_pack_path = ""
-
-# 谱面演示时配置
 chartDebugLine = 0.0
 chartDebugNote = 0.0
 chartRatio = 1.0
-
-# 谱面揭秘时配置
-# chartDebugLine = 0.4
-# chartDebugNote = 0.3
-# chartRatio = 0.40
-
 noteScale = 1.0
 
-disableLoading = true
 renderLine = true
 renderLineExtra = true
 renderNote = true
+doubleHint = true
 renderUiPause = true
 renderUiName = true
 renderUiLevel = true
@@ -49,9 +43,8 @@ renderUiCombo = true
 renderUiBar = true
 renderBg = true
 renderBgDim = true
-renderExtra = true
 particle = true
-doubleHint = true
+renderExtra = true
 
 aggressive = false
 roman = false
@@ -60,17 +53,18 @@ chinese = false
 bgBlurriness = 80.0
 watermark = "Auto Rendered with Phi-Recorder. Only released by 德猴先生 on Bilibili."
 combo = "AUTOPLAY"
-maxParticles = 1000 # 20000 100000 800000
+maxParticles = 5000 # 5000 25000 200000
 
 # Audio 音频
 forceLimit = true
 hires = false
 loudnessEqualization = false
+AudioMixOptimization = true
 
 volumeMusic = 1.0
 volumeSfx = 0.7
-compressionRatio = 20.0
-limitThreshold = 1.0
+limitThreshold = 1.0 # if forceLimit
+compressionRatio = 20.0 # else
 
 
 # Other 其他
@@ -79,7 +73,7 @@ allBad = false
 judgeOffset = 0.0
 difficulty = ""
 fade = 0.0
+alphaTint = false
 
-simpleFileName = true # {date} {name}_{level} -> {name}.{composer}_{level}
 fxaa = false
 speed = 1.0

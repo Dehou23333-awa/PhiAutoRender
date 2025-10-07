@@ -36,7 +36,7 @@ def renderHelper():
     logger.debug("Config.tom extracted and saved to ../temp/config/config_%s.toml", realname)
     
     logger.info("Starting render process for file: %s", pez_name)
-    cmd = [PhiRecorderPath, "--render", f'{os.path.abspath(file_path)}', "--output", os.path.abspath(f"../temp/videos/{pez_name}"), "--config", os.path.abspath(f"../temp/config/config_{realname}.toml")]
+    cmd = [PhiRecorderPath, "--render", f'{os.path.abspath(file_path)}', "--output", os.path.abspath(f"../temp/videos/{pez_name}.mp4"), "--config", os.path.abspath(f"../temp/config/config_{realname}.toml")]
     logger.debug("Running command: %s", ' '.join(cmd))
     subprocess.run(cmd, shell=True, check=True)
 
