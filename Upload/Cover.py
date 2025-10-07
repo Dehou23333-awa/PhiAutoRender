@@ -114,7 +114,7 @@ def run_pillow(ipt: str, opt: str, song_title: str):
     shadow_color = "black"
 
     try:
-        font = ImageFont.truetype("../font.ttf", size=font_size)
+        font = ImageFont.truetype("font.ttf", size=font_size)
     except IOError:
         logger.warning("Custom font not found. Using default font.")
         try:
