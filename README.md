@@ -25,7 +25,7 @@ PhiAutoRender 是一个基于 Python 的自动化渲染 Phigros 谱面的工具�
 > [!IMPORTANT]  
 > 请确保使用 Phi-Recorder 1.5.0 及以上版本，否则可能无法正确渲染。Phi-Recorder 1.5.0 版本修改了输出文件命令行参数，使用旧版本会导致 Upload 模块无法识别。
 
-- [Motrix] (https://motrix.app/)
+- [Motrix](https://motrix.app/)
 
 ### 1. 克隆仓库
 ```bash
