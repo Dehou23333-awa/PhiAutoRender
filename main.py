@@ -47,3 +47,5 @@ update_chart_info()
 
 endtime = time.time()
 logger.info("Total time taken: %.2f seconds", endtime - starttime)
+
+os.system("pause")

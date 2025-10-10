@@ -10,6 +10,7 @@ import time
 import shutil
 import aria2p
 import dotenv
+from tqdm import tqdm
 
 dotenv.load_dotenv()
 
@@ -32,10 +33,24 @@ def download(url):
     download = aria2.add_uris([url],
     options={"dir": os.path.abspath("../temp"), "out": f"Phigros_{version}.apk"}  # 指定下载目录
     )
-    while not download.is_complete:
-        download.update()
-        logger.info(f"Download progress: {download.progress_string()}")
-        time.sleep(1)
+    
+    # 使用tqdm进度条
+    with tqdm(desc="Downloading APK", unit="B", unit_scale=True, ncols=100) as pbar:
+        while not download.is_complete:
+            download.update()
+            # 更新进度条
+            if download.total_length > 0:
+                pbar.total = download.total_length
+                pbar.n = download.completed_length
+                pbar.refresh()
+            time.sleep(0.1)  # 减少更新频率以提高性能
+        
+        # 确保进度条显示为完成状态
+        if download.total_length > 0:
+            pbar.total = download.total_length
+            pbar.n = download.total_length
+            pbar.refresh()
+    
     logger.info("Download completed.")
 
 url, md5_apk, version, Phiversion = "","", "", ""
@@ -43,7 +58,8 @@ url, md5_apk, version, Phiversion = "","", "", ""
 def build_md5_table(info_data):
     logger.info("Building file information table with MD5 hashes")
     
-    # 遍历文件夹计算MD5
+    # 收集所有需要处理的文件
+    chart_files = []
     for root, dirs, files in os.walk('../temp/chart'):
         folder_name = os.path.basename(root)
         if folder_name == 'chart':
@@ -57,16 +73,22 @@ def build_md5_table(info_data):
             logger.warning(f"Song {song_id} found in chart folder but not in info_data")
             continue
         
-        # 为每个难度添加MD5字段
+        # 收集有效的谱面文件
         for file in files:
             level = os.path.splitext(file)[0].split('-')[-1].upper()
             if level in ['EZ', 'HD', 'IN', 'AT']:
-                file_path = os.path.join(root, file)
-                with open(file_path, 'rb') as f:
-                    md5 = hashlib.md5(f.read()).hexdigest()
-                    # 将MD5添加到对应难度的info中
-                    if level in info_data[song_id]:
-                        info_data[song_id][level]["md5"] = md5
+                chart_files.append((root, file, song_id, level))
+    
+    # 使用tqdm进度条计算MD5
+    with tqdm(chart_files, desc="Computing MD5 hashes", ncols=100) as pbar:
+        for root, file, song_id, level in pbar:
+            pbar.set_postfix_str(f"Processing {song_id}/{level}")
+            file_path = os.path.join(root, file)
+            with open(file_path, 'rb') as f:
+                md5 = hashlib.md5(f.read()).hexdigest()
+                # 将MD5添加到对应难度的info中
+                if level in info_data[song_id]:
+                    info_data[song_id][level]["md5"] = md5
 
     # 保存合并后的数据
     with open('../data/Chart_info_New.json', 'w', encoding='utf-8') as info_file:
