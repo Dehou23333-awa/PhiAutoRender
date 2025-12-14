@@ -24,7 +24,7 @@ if not os.path.exists(".env"):
     setup()
 
 logger.info("Starting Cleanup of previous outputs")
-cleanup()
+# cleanup()
 logger.info("Cleanup completed")
 
 logger.info("Starting Unpack process")

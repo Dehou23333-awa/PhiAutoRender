@@ -1,6 +1,6 @@
 {
-    "Version": 133,
-    "PhiVersion": "3.16.0",
+    "Version": 137,
+    "PhiVersion": "3.18.0",
     "Songs": {
         "Glaciaxion.SunsetRay": {
             "Name": "Glaciaxion",
@@ -5729,7 +5729,7 @@
         "AphroditesChildshortver.RUQOA": {
             "Name": "Aphrodite's Child (short ver.)",
             "Composer": "RUQOA",
-            "illustrator": "Sin:cK for Immaculée Sekai",
+            "illustrator": "cala for Immaculée Sekai",
             "chapter": "Immaculée Sekai",
             "previewTime": 31.88,
             "previewEndTime": 46.88,
@@ -6172,7 +6172,224 @@
             "AT": {
                 "charter": "Salt feat. M3ow",
                 "difficulty": "17.4",
-                "md5": "d7964b6e19ab71c1de51328b61cc78c1"
+                "md5": "8bc5fd153280ca352edc1d1ff618fb32"
+            }
+        },
+        "SolaggyfeatUzumaki.ShrimpCatsはぁち後藤涼輔": {
+            "Name": "So laggy! (feat. Uzumaki)",
+            "Composer": "ShrimpCats. (はぁち×後藤涼輔)",
+            "illustrator": "塩焼とまと",
+            "chapter": "Single",
+            "previewTime": 46.5,
+            "previewEndTime": 68.0,
+            "EZ": {
+                "charter": "Salt",
+                "difficulty": "5.0",
+                "md5": "f594ba3c24df36d7f6be29dd2559937a"
+            },
+            "HD": {
+                "charter": "Salt",
+                "difficulty": "9.5",
+                "md5": "712049ebfdd0baba2ff877e29d868ade"
+            },
+            "IN": {
+                "charter": "Salt",
+                "difficulty": "14.8",
+                "md5": "5ff8bfefa4c24481ac7294c0f68203ce"
+            }
+        },
+        "000AinSophAur.Yumeji": {
+            "Name": "000 -Ain Soph Aur-",
+            "Composer": "Yumeji",
+            "illustrator": "NerSAN",
+            "chapter": "Single",
+            "previewTime": 107.0,
+            "previewEndTime": 127.0,
+            "EZ": {
+                "charter": "Magazet",
+                "difficulty": "2.5",
+                "md5": "9c1873195de67c2d34b1098cece44b14"
+            },
+            "HD": {
+                "charter": "Magazet",
+                "difficulty": "8.4",
+                "md5": "eb331d353171d5e0f9bc142738e4136f"
+            },
+            "IN": {
+                "charter": "啊0哒0咔0哟 & Dilated",
+                "difficulty": "14.4",
+                "md5": "4c660be01e99aeea4aa3cd36ff564bfd"
+            }
+        },
+        "Xepion.Acotto": {
+            "Name": "Xep+ion",
+            "Composer": "Acotto",
+            "illustrator": "クルス (Ctymax modified)",
+            "chapter": "Liminality",
+            "previewTime": 80.0,
+            "previewEndTime": 105.0,
+            "EZ": {
+                "charter": "Su1fuR",
+                "difficulty": "2.5",
+                "md5": "35f7f85953c03f0b75e441e48d92c554"
+            },
+            "HD": {
+                "charter": "professional Rikko",
+                "difficulty": "9.8",
+                "md5": "93d8c7c13e68f0eb0f05424ea56de8c2"
+            },
+            "IN": {
+                "charter": "Su1fuRikko",
+                "difficulty": "14.8",
+                "md5": "af68d550427b78ac2c2d01d7d8bd6896"
+            }
+        },
+        "Archidoxen.Se_IRA": {
+            "Name": "Archidoxen",
+            "Composer": "Se_IRA",
+            "illustrator": "n/a (Ctymax modified)",
+            "chapter": "Liminality",
+            "previewTime": 84.5,
+            "previewEndTime": 97.0,
+            "EZ": {
+                "charter": "Rft.",
+                "difficulty": "4.0",
+                "md5": "9fb38f7f7926bf2bd69b8014ebf6b3c5"
+            },
+            "HD": {
+                "charter": "Rft.",
+                "difficulty": "10.0",
+                "md5": "4141b1ffa7d0ff171e37b688291e91a0"
+            },
+            "IN": {
+                "charter": "Rft.",
+                "difficulty": "15.6",
+                "md5": "b9f2913209d974e00bedc305200a7dee"
+            }
+        },
+        "百鬼夜行.SaladSavior": {
+            "Name": "百鬼֎夜行",
+            "Composer": "Salad Savior",
+            "illustrator": "軽目くお (Ctymax modified)",
+            "chapter": "Liminality",
+            "previewTime": 84.0,
+            "previewEndTime": 104.0,
+            "EZ": {
+                "charter": "Magazet",
+                "difficulty": "4.5",
+                "md5": "f86705bd041fcba0ff654a507d172ec8"
+            },
+            "HD": {
+                "charter": "Magazet",
+                "difficulty": "10.1",
+                "md5": "b1732b0144cb6c7aa5cf9426bebe1095"
+            },
+            "IN": {
+                "charter": "～Algax vs. RipHall～",
+                "difficulty": "15.8",
+                "md5": "7d403284ca2052af91effc315a3e4b7d"
+            }
+        },
+        "BANGINGSTRIKE.DewPleiades": {
+            "Name": "BANGING STRIKE",
+            "Composer": "Dew Pleiades",
+            "illustrator": "Rutumn feat. 汉堡",
+            "chapter": "Single",
+            "previewTime": 41.6,
+            "previewEndTime": 60.0,
+            "EZ": {
+                "charter": "adky",
+                "difficulty": "5.0",
+                "md5": "304eb965f42cca4ba3a76018f32b11b6"
+            },
+            "HD": {
+                "charter": "adky",
+                "difficulty": "10.2",
+                "md5": "eb06a5b7b011efa8ec8db20fd6654c4f"
+            },
+            "IN": {
+                "charter": "Salt & Uvernight",
+                "difficulty": "16.0",
+                "md5": "2c1a8ad43368bbeb6d1d7070841ccc57"
+            },
+            "AT": {
+                "charter": "魔王、大咩兔の兄 『大咩免』!!",
+                "difficulty": "16.9",
+                "md5": "e3930d87a4b93f3fa1b7c5bd6ce09178"
+            }
+        },
+        "TheWholeRest.KIVΛ": {
+            "Name": "The Whole Rest",
+            "Composer": "KIVΛ",
+            "illustrator": "©2025 Rayark Inc. CYTUS II®",
+            "chapter": "CYTUS II",
+            "previewTime": 70.0,
+            "previewEndTime": 90.0,
+            "EZ": {
+                "charter": "Salt",
+                "difficulty": "5.0",
+                "md5": "ca8878b4a308adeeed4b48d396be4239"
+            },
+            "HD": {
+                "charter": "¯EASY",
+                "difficulty": "9.6",
+                "md5": "5d8e212fe4559bd151cb8f0ecf8a8604"
+            },
+            "IN": {
+                "charter": "Uvernight from CYTUS II",
+                "difficulty": "13.6",
+                "md5": "dc4847e2d2dd805a61b760f3cc2eb2a3"
+            }
+        },
+        "Cristalisia.onoken": {
+            "Name": "Cristalisia",
+            "Composer": "onoken",
+            "illustrator": "©2025 Rayark Inc. CYTUS II®",
+            "chapter": "CYTUS II",
+            "previewTime": 80.0,
+            "previewEndTime": 108.5,
+            "EZ": {
+                "charter": "Skuwo",
+                "difficulty": "4.0",
+                "md5": "2d23efcc95af984f0209b059d16f929c"
+            },
+            "HD": {
+                "charter": "Skuwo",
+                "difficulty": "10.4",
+                "md5": "1e36040c67bff4be63889128ba0683a3"
+            },
+            "IN": {
+                "charter": "Salt",
+                "difficulty": "14.5",
+                "md5": "14ce7e877980b6193277efef78d4d737"
+            }
+        },
+        "Hydra.JamesLandinoXAkiraComplex": {
+            "Name": "Hydra",
+            "Composer": "James Landino X Akira Complex",
+            "illustrator": "©2025 Rayark Inc. CYTUS II®",
+            "chapter": "CYTUS II",
+            "previewTime": 96.5,
+            "previewEndTime": 121.0,
+            "EZ": {
+                "charter": "COC",
+                "difficulty": "6.0",
+                "md5": "1345f856a6f3478b62d928043ee099f9"
+            },
+            "HD": {
+                "charter": "COC",
+                "difficulty": "11.6",
+                "md5": "16a1fb86d01e85fc0dc61903571ca2b0"
+            },
+            "IN": {
+                "charter": "Su1fuR",
+                "difficulty": "15.4",
+                "md5": "b21d1046a7341f39d16d805a4168bf5f"
+            },
+            "AT": {
+                "charter": "[该用户已被禁言]",
+                "difficulty": "17.1",
+                "md5": "02451d2c2d4f4f2e05b8cf0fa80acb67"
             }
         },
         "Poseidon.1112vsStar": {
@@ -6542,7 +6759,7 @@
             "AT": {
                 "charter": "StR-1",
                 "difficulty": "16.4",
-                "md5": "4fc7aee299af9a881f6a3a62e98b3af0"
+                "md5": "8638649cd9a24d51365a1860d2eea467"
             }
         },
         "ReEndofaDream.umavsモリモリあつし": {
